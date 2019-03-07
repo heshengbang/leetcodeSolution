@@ -26,6 +26,12 @@ Output: 1->2->3
  */
 
 public class Remove_Duplicates_From_Sorted_List {
+    static  class ListNode {
+        int val;
+        ListNode next;
+        ListNode(int x) { val = x; }
+    }
+
     public static ListNode deleteDuplicates(ListNode head) {
         ListNode temp = head, next;
         while (temp != null && temp.next != null) {
@@ -57,9 +63,3 @@ public class Remove_Duplicates_From_Sorted_List {
         System.out.println(deleteDuplicates(l6));
     }
 }
-
- class ListNode {
-      int val;
-      ListNode next;
-      ListNode(int x) { val = x; }
-  }
