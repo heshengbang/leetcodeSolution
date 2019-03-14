@@ -1,4 +1,4 @@
-package com.hsb.leetcodeSolution.easy;
+package com.hsb.leetcode.easy;
 
 import java.util.Map;
 import java.util.TreeMap;
