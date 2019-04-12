@@ -1,7 +1,10 @@
 package com.hsb.leetcode.Medium;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.TreeSet;
 
 /**
  * Blog: https://www.heshengbang.tech
@@ -15,7 +18,7 @@ import java.util.List;
 public class Top_K_Frequent_Words {
     public static void main(String[] args) {
         String[] str = {"i", "love", "leetcode", "i", "love", "coding"};
-        System.out.println(topKFrequent(str, 3));
+        System.out.println(topKFrequent2(str, 3));
     }
 
     public static List<String> topKFrequent(String[] words, int k) {
@@ -44,5 +47,23 @@ public class Top_K_Frequent_Words {
             }
         }
         return results.subList(0, k);
+    }
+
+    public static List<String> topKFrequent2(String[] words, int k) {
+        Map<String, Integer> counts = new HashMap<>(words.length);
+        for (String item: words) {
+            counts.merge(item, 1, Integer::sum);
+        }
+        TreeSet<String> keys = new TreeSet<>((o1, o2) -> {
+            if (counts.get(o1) < counts.get(o2)) {
+                return 1;
+            } else if (counts.get(o1).equals(counts.get(o2))){
+                return o1.compareTo(o2);
+            } else {
+                return -1;
+            }
+        }) ;
+        keys.addAll(counts.keySet());
+        return new ArrayList<>(keys).subList(0, k);
     }
 }
