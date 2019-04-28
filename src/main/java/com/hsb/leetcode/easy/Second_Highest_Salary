@@ -19,3 +19,12 @@ For example, given the above Employee table, the query should return 200 as the 
 
 -- No1:
 SELECT max(Salary) as SecondHighestSalary FROM Employee WHERE Salary < (SELECT max(Salary) FROM Employee)
+
+-- No2:
+Select
+    (Select
+        Distinct Salary
+    From
+        Employee
+    Order By Salary Desc
+    Limit 1 Offset 1) AS SecondHighestSalary
