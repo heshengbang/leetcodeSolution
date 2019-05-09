@@ -37,9 +37,18 @@ public class Reverse_Bits {
             // get the value of the bit in spot (31 - i) from n: ((n >> (31 - i)) & 1)
             // Let's refer to this bit as X
             // set the value at bit i into out: out ^= X << i;
-            out ^= ((n >> (31 - i)) & 1) << i;
+            int a = n >> (31 - i);
+            int b = a & 1;
+            int c = b << i;
+            out = out ^ c ;
+
+            System.out.println("a = " + Integer.toBinaryString(a) + " b = " + Integer.toBinaryString(b) + " c = " + Integer.toBinaryString(c) + " out = " + Integer.toBinaryString(out));
         }
 
         return out;
+    }
+
+    public static void main(String[] args) {
+        System.out.println(reverseBits(43261596));
     }
 }
