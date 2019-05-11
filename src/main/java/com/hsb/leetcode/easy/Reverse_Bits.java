@@ -1,4 +1,4 @@
-package com.hsb.leetcode.Medium;
+package com.hsb.leetcode.easy;
 
 /*
  * Copyright ©2011-2016 heshengbang
