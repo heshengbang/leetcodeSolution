@@ -2,7 +2,7 @@ package com.hsb.leetcode.had;
 
 /*
  * 类描述:
- * Copyright  trulyheshengbang@gmail.com
+ * Copyright trulyheshengbang@gmail.com
  * @since 2019/7/3 14:15
  * @version 1.0
  * @author heshengbang
