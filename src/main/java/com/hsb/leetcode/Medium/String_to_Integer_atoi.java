@@ -2,10 +2,10 @@ package com.hsb.leetcode.Medium;
 
 /*
  * 类描述:
- * Copyright 多点生活（成都）科技有限公司
+ * Copyright heshengbang
  * @since 2019/7/18 11:41
  * @version 1.0
- * @author hu.he@dmall.com 何虎
+ * @author heshengbang
  *************************************************
  */
 
