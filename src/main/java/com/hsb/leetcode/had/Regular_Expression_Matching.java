@@ -57,9 +57,25 @@ package com.hsb.leetcode.had;
  *
  */
 public class Regular_Expression_Matching {
-    public boolean isMatch(String s, String p) {
+    public static boolean isMatch(String s, String p) {
+        if (s == null) {
+            return p == null;
+        } else if (s.length() == 0) {
+            return p.length() == 0 || (p.length() == 2 && p.endsWith("*"));
+        } else if (s.length() == 1) {
+            return matchSingleWord(s, p);
+        } else {
+            String subString1 = s.substring(0, 1);
+            String subString2 = s.substring(1);
+            return matchSingleWord(subString1, p) && isMatch(subString2, p);
+        }
+    }
 
+    private static boolean matchSingleWord(String s, String p) {
+        return s.equals(p) || (p.length() == 3 && p.startsWith(s) && p.endsWith("*"));
+    }
 
-        return false;
+    public static void main(String[] args) {
+        System.out.println(isMatch("aa", "a"));
     }
 }
