@@ -63,19 +63,29 @@ public class Regular_Expression_Matching {
         } else if (s.length() == 0) {
             return p.length() == 0 || (p.length() == 2 && p.endsWith("*"));
         } else if (s.length() == 1) {
-            return matchSingleWord(s, p);
+            String[] temps = {p};
+            return matchSingleWord(s, temps);
         } else {
             String subString1 = s.substring(0, 1);
             String subString2 = s.substring(1);
-            return matchSingleWord(subString1, p) && isMatch(subString2, p);
+            String[] temps = {p};
+            if (!matchSingleWord(subString1, temps)) {
+                return false;
+            }
+            p = temps[0];
+            return isMatch(subString2, p);
         }
     }
 
-    private static boolean matchSingleWord(String s, String p) {
-        return s.equals(p) || (p.length() == 3 && p.startsWith(s) && p.endsWith("*"));
+    private static boolean matchSingleWord(String s, String[] temps) {
+        if (s.equals(temps[0])) {
+            temps[0] = "";
+            return true;
+        }
+        return false;
     }
 
     public static void main(String[] args) {
-        System.out.println(isMatch("aa", "a"));
+        System.out.println(isMatch("aa", "a*"));
     }
 }
