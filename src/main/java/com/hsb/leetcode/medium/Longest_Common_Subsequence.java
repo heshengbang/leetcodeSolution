@@ -43,10 +43,28 @@ package com.hsb.leetcode.medium;
  * 1 <= text2.length <= 1000
  * The input strings consist of lowercase English characters only.
  *
+ *  "oxcpqrsvwf" "shmtulqrypy"
+ *
  *
  */
 public class Longest_Common_Subsequence {
     public int longestCommonSubsequence(String text1, String text2) {
-        return 0;
+        int row=text1.length()+1, col=text2.length()+1;
+        int[][] dp = new int[row][col];
+        for(int i=1; i<row; i++) {
+            for(int j=1; j<col; j++) {
+                if(text1.charAt(i-1)==text2.charAt(j-1)) {
+                    dp[i][j] = dp[i-1][j-1] + 1;
+                } else {
+                    dp[i][j] = Math.max(dp[i-1][j], dp[i][j-1]);
+                }
+            }
+        }
+        return dp[row-1][col-1];
+    }
+
+    public static void main(String[] args) {
+        Longest_Common_Subsequence haha = new Longest_Common_Subsequence();
+        System.out.println(haha.longestCommonSubsequence("oxcpqrsvwf", "shmtulqrypy"));
     }
 }
