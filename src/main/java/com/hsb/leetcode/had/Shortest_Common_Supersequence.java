@@ -35,38 +35,88 @@ package com.hsb.leetcode.had;
  * <p>
  * <p>
  * "bbbaaaba"  "bbababbb"   "bbabaaababb"
+ * "bbabacaa"  "cccababab"  "bbcccababcaab"
  */
 public class Shortest_Common_Supersequence {
     public String shortestCommonSupersequence(String str1, String str2) {
         if (str1.length() == 0 || str2.length() == 0 || str1.contains(str2) || str2.contains(str1)) {
             return str1.length() < str2.length() ? str2 : str1;
         }
-        String[][] results = new String[str1.length() + 1][str2.length() + 1];
-        for (int str1Index = 1; str1Index < str1.length() + 1; str1Index++) {
-            for (int str2Index = 1; str2Index < str2.length() + 1; str2Index++) {
-                if (str1.charAt(str1Index - 1) == str2.charAt(str2Index - 1)) {
-                    if (results[str1Index - 1][str2Index - 1] == null) {
-                        results[str1Index - 1][str2Index - 1] = "";
-                    }
-                    results[str1Index][str2Index] = results[str1Index - 1][str2Index - 1] + str1.charAt(str1Index - 1);
-                } else {
-                    if (results[str1Index - 1][str2Index] == null) {
-                        results[str1Index - 1][str2Index] = "";
-                    }
-                    String temp1 = results[str1Index - 1][str2Index];
-                    if (results[str1Index][str2Index - 1] == null) {
-                        results[str1Index][str2Index - 1] = "";
-                    }
-                    String temp2 = results[str1Index][str2Index - 1];
-                    results[str1Index][str2Index] = temp1.length() < temp2.length() ? temp1 : temp2;
+        int[][] results = new int[str1.length() + 1][str2.length() + 1];
+        for (int i = 0; i < str1.length() + 1; i++) {
+            for (int j = 0; j < str2.length() + 1; j++) {
+                if (i == 0) {
+                    results[0][j] = j;
+                }
+                if (j == 0) {
+                    results[i][0] = i;
                 }
             }
         }
-        return results[str1.length()][str2.length()];
+        for (int str1Index = 1; str1Index < str1.length() + 1; str1Index++) {
+            for (int str2Index = 1; str2Index < str2.length() + 1; str2Index++) {
+                int select1 = results[str1Index - 1][str2Index] + 1;
+                int select2 = results[str1Index][str2Index - 1] + 1;
+                int select3;
+                boolean isEqual = str1.charAt(str1Index - 1) == str2.charAt(str2Index - 1);
+                if (isEqual) {
+                    select3 = results[str1Index - 1][str2Index - 1] + 1;
+                } else {
+                    select3 = results[str1Index - 1][str2Index - 1] + 2;
+                }
+                // 优先取select1，其次是select2，最后是select3
+                if (select1 <= select2) {
+                    if (select1 <= select3) {
+                        results[str1Index][str2Index] = select1;
+                    } else {
+                        results[str1Index][str2Index] = select3;
+                    }
+                } else {
+                    if (select2 <= select3) {
+                        results[str1Index][str2Index] = select2;
+                    } else {
+                        results[str1Index][str2Index] = select3;
+                    }
+                }
+            }
+        }
+        int str1Index = str1.length(), str2Index = str2.length();
+        StringBuilder stringBuilder = new StringBuilder();
+        while (str1Index > 0 && str2Index > 0) {
+            int select1 = results[str1Index - 1][str2Index] + 1;
+            int select2 = results[str1Index][str2Index - 1] + 1;
+            boolean isEqual = str1.charAt(str1Index - 1) == str2.charAt(str2Index - 1);
+            if (results[str1Index][str2Index] == select1) {
+                stringBuilder.append(str1.charAt(str1Index - 1));
+                str1Index--;
+            } else if (results[str1Index][str2Index] == select2) {
+                stringBuilder.append(str2.charAt(str2Index - 1));
+                str2Index--;
+            } else {
+                stringBuilder.append(str1.charAt(str1Index - 1));
+                if (!isEqual) {
+                    stringBuilder.append(str2.charAt(str2Index - 1));
+                }
+                str1Index--;
+                str2Index--;
+            }
+        }
+        String result = stringBuilder.reverse().toString();
+        if (str1Index > 0) {
+            result = str1.substring(0, str1Index) + result;
+        }
+        if (str2Index >0) {
+            result = str2.substring(0, str2Index) + result;
+        }
+        return result;
     }
 
     public static void main(String[] args) {
         Shortest_Common_Supersequence item = new Shortest_Common_Supersequence();
-        System.out.println(item.shortestCommonSupersequence("bbbaaaba", "bbababbb"));
+        String param1 = "bbbaaaba";
+        String param2 = "bbababbb";
+        String result = item.shortestCommonSupersequence(param1, param2);
+        String expected = "bbabaaababb";
+        System.out.println(result + "    " + expected + "   是否相等" + result.equals(expected));
     }
 }
