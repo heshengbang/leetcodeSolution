@@ -8,6 +8,9 @@ package com.hsb.leetcode.had;
  * email: trulyheshengbang@gmail.com
  */
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  *
  * Given an input string (s) and a pattern (p), implement regular expression matching with support for '.' and '*'.
@@ -58,34 +61,130 @@ package com.hsb.leetcode.had;
  */
 public class Regular_Expression_Matching {
     public static boolean isMatch(String s, String p) {
-        if (s == null) {
-            return p == null;
-        } else if (s.length() == 0) {
-            return p.length() == 0 || (p.length() == 2 && p.endsWith("*"));
-        } else if (s.length() == 1) {
-            String[] temps = {p};
-            return matchSingleWord(s, temps);
-        } else {
-            String subString1 = s.substring(0, 1);
-            String subString2 = s.substring(1);
-            String[] temps = {p};
-            if (!matchSingleWord(subString1, temps)) {
-                return false;
+        // there may four type mode: 1. pure letters 2. dot 3. letter mix asterisk 4. dot mix asterisk
+        List<String> patterns = parse(p);
+        String rest = s;
+        boolean hasPre = false;
+        for (int i = 0; i <  patterns.size(); i++) {
+            if (".".equals(patterns.get(i))) {
+                if (i == patterns.size() - 1 && rest.length() == 1) {
+                    return true;
+                } else {
+                    if (rest.length() == 0) {
+                        return false;
+                    } else {
+                        if (!hasPre) {
+                            rest = rest.substring(1);
+                        }
+                    }
+                }
+            } else if (".*".equals(patterns.get(i))) {
+                hasPre = true;
+            } else if (patterns.get(i).endsWith("*")) {
+                rest = matchLetter(rest, patterns.get(i), hasPre);
+                if (i == patterns.size() - 1) {
+                    return rest.length() == 0;
+                }
+            } else if (!patterns.get(i).contains(".") && !patterns.get(i).contains("*")) {
+                if (i == patterns.size() - 1) {
+                    if (hasPre) {
+                        return rest.endsWith(patterns.get(i));
+                    } else {
+                        return rest.equals(patterns.get(i));
+                    }
+                } else {
+                    if (hasPre) {
+                        if (rest.contains(patterns.get(i))) {
+                            rest = rest.split(patterns.get(i))[1];
+                        } else {
+                            return false;
+                        }
+                    } else {
+                        if (rest.startsWith(patterns.get(i))) {
+                            rest = rest.substring(patterns.get(i).length());
+                        } else {
+                            return false;
+                        }
+                    }
+                }
             }
-            p = temps[0];
-            return isMatch(subString2, p);
-        }
-    }
-
-    private static boolean matchSingleWord(String s, String[] temps) {
-        if (s.equals(temps[0])) {
-            temps[0] = "";
-            return true;
         }
         return false;
     }
 
-    public static void main(String[] args) {
-        System.out.println(isMatch("aa", "a*"));
+    /**
+     * @param pattern Mode like a* or b*
+     */
+    private static String matchLetter(String rest, String pattern, boolean hasPrefix) {
+        String letter = pattern.replace("*", "");
+        if (hasPrefix && !rest.startsWith(letter) && rest.contains(letter)) {
+            rest = rest.substring(rest.indexOf(letter));
+        }
+        while (rest.startsWith(letter)) {
+            rest = rest.substring(1);
+        }
+        return rest;
+    }
+
+    private static List<String> parse(String pattern) {
+        List<String> patterns = new ArrayList<>();
+        if (pattern == null || pattern.length() == 0) {
+            return patterns;
+        }
+        if (!pattern.contains("*")) {
+            dealPattern(pattern, patterns, false);
+            return patterns;
+        }
+        String[] subPattern = pattern.split("\\*");
+        if (subPattern.length == 0) {
+            patterns.add("*");
+            return patterns;
+        }
+        for (int i = 0; i < subPattern.length; i++) {
+            if (i == subPattern.length - 1) {
+                if (pattern.endsWith("*")) {
+                    dealPattern(subPattern[i], patterns, true);
+                } else {
+                    dealPattern(subPattern[i], patterns, false);
+                }
+            } else {
+                dealPattern(subPattern[i], patterns, true);
+            }
+        }
+        return patterns;
+    }
+
+    public static void dealPattern(String pattern, List<String> patterns, boolean haveAsterisk) {
+        if (pattern.length() == 0) {
+            return;
+        }
+        String part1 = pattern;
+        String part2 = null;
+        if (haveAsterisk) {
+            part1 = pattern.substring(0, pattern.length() - 1);
+            part2 = pattern.substring(pattern.length() - 1) + "*";
+        }
+        if (part1.length() > 0) {
+            if (part1.contains(".")) {
+                String[] subPart1s = part1.split("\\.");
+                if (subPart1s.length > 0) {
+                    for (int j = 0; j < subPart1s.length; j++) {
+                        if (subPart1s[j].length() > 0) {
+                            patterns.add(subPart1s[j]);
+                        }
+                        if (j != subPart1s.length - 1) {
+                            patterns.add(".");
+                        }
+                    }
+                } else {
+                    patterns.add(".");
+                }
+            } else {
+                patterns.add(part1);
+            }
+        }
+        if (haveAsterisk && part2.length() > 0) {
+            patterns.add(part2);
+        }
     }
 }
