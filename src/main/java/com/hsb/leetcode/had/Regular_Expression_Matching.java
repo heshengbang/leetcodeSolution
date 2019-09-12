@@ -60,7 +60,7 @@ import java.util.List;
  *
  */
 public class Regular_Expression_Matching {
-    public static boolean isMatch(String s, String p) {
+    public boolean isMatch(String s, String p) {
         // there may four type mode: 1. pure letters 2. dot 3. letter mix asterisk 4. dot mix asterisk
         List<String> patterns = parse(p);
         String rest = s;
@@ -79,7 +79,11 @@ public class Regular_Expression_Matching {
                     }
                 }
             } else if (".*".equals(patterns.get(i))) {
-                hasPre = true;
+                if (i == patterns.size() - 1) {
+                    return true;
+                } else {
+                    hasPre = true;
+                }
             } else if (patterns.get(i).endsWith("*")) {
                 rest = matchLetter(rest, patterns.get(i), hasPre);
                 if (i == patterns.size() - 1) {
@@ -95,7 +99,8 @@ public class Regular_Expression_Matching {
                 } else {
                     if (hasPre) {
                         if (rest.contains(patterns.get(i))) {
-                            rest = rest.split(patterns.get(i))[1];
+                            int index = rest.indexOf(patterns.get(i));
+                            rest = rest.substring(patterns.get(i).length() + index);
                         } else {
                             return false;
                         }
@@ -115,7 +120,7 @@ public class Regular_Expression_Matching {
     /**
      * @param pattern Mode like a* or b*
      */
-    private static String matchLetter(String rest, String pattern, boolean hasPrefix) {
+    private String matchLetter(String rest, String pattern, boolean hasPrefix) {
         String letter = pattern.replace("*", "");
         if (hasPrefix && !rest.startsWith(letter) && rest.contains(letter)) {
             rest = rest.substring(rest.indexOf(letter));
@@ -126,7 +131,7 @@ public class Regular_Expression_Matching {
         return rest;
     }
 
-    private static List<String> parse(String pattern) {
+    private List<String> parse(String pattern) {
         List<String> patterns = new ArrayList<>();
         if (pattern == null || pattern.length() == 0) {
             return patterns;
@@ -154,7 +159,7 @@ public class Regular_Expression_Matching {
         return patterns;
     }
 
-    public static void dealPattern(String pattern, List<String> patterns, boolean haveAsterisk) {
+    public void dealPattern(String pattern, List<String> patterns, boolean haveAsterisk) {
         if (pattern.length() == 0) {
             return;
         }
@@ -186,5 +191,17 @@ public class Regular_Expression_Matching {
         if (haveAsterisk && part2.length() > 0) {
             patterns.add(part2);
         }
+    }
+
+    public static void main(String[] args) {
+        Regular_Expression_Matching item = new Regular_Expression_Matching();
+//        System.out.println(item.isMatch("aa", "a"));
+//        System.out.println(item.isMatch("aa", "a*"));
+//        System.out.println(item.isMatch("ab", ".*"));
+//        System.out.println(item.isMatch("aab", "c*a*b"));
+//        System.out.println(item.isMatch("mississippi", "mis*is*p*."));
+//        System.out.println(item.isMatch("abcaaaaaaabaabcabac", ".*ab.a.*a*a*.*b*b*"));
+        // expected true
+        System.out.println(item.isMatch("aaa", "a*a"));
     }
 }
