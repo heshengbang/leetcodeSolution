@@ -58,68 +58,58 @@ import java.util.Map;
  * Output: false
  */
 public class Regular_Expression_Matching {
-    public static boolean isMatch(String s, String p) {
+    public boolean isMatch(String s, String p) {
         Map<String, Boolean> map = new HashMap<>();
         return match(s, p, map);
     }
 
-    public static boolean match(String s, String p, Map<String, Boolean> results) {
-        if (s.length() == 0 && p.length() == 0) {
-            return true;
-        }
-        if (p.length() == 0) {
-            return false;
-        }
-
+    public boolean match(String s, String p, Map<String, Boolean> results) {
         String key = s + "-" + p;
         if (results.containsKey(key)) {
             return results.get(key);
         }
-        String letter, subString;
-        if (s.length() < 1) {
-            letter = "";
-            subString = "";
-        } else {
-            letter = s.substring(s.length() - 1);
-            subString = s.substring(0, s.length() - 1);
+        if (s.length() == 0 && p.length() == 0) {
+            return true;
+        } else if (p.length() == 0) {
+            return false;
+        } else if (s.length() == 0) {
+            return parse(p);
         }
-        String pattern = p.substring(p.length() - 1);
-        String subPattern = p.substring(0, p.length() - 1);
-        if ("*".equals(pattern)) {
-            pattern = subPattern.substring(subPattern.length() - 1) + "*";
-            subPattern = subPattern.substring(0, subPattern.length() - 1);
+        String currentLetter = s.substring(s.length() - 1);
+        String restLetter = s.substring(0, s.length() - 1);
+        String currentPattern = p.substring(p.length() - 1);
+        String restPattern = p.substring(0, p.length() - 1);
+        if ("*".equals(currentPattern)) {
+            currentPattern = p.substring(p.length() - 2);
+            restPattern = p.substring(0, p.length() - 2);
         }
-        if (".".equals(pattern)) {
-            if (s.length() == 0) {
-                results.put(key, false);
+        if (".".equals(currentPattern)) {
+            results.put(key, match(restLetter, restPattern, results));
+        } else if (".*".equals(currentPattern)) {
+            results.put(key, match(restLetter, p, results) || match(restLetter, restPattern, results) || match(s, restPattern, results));
+        } else if (currentPattern.endsWith("*")) {
+            if (currentPattern.contains(currentLetter)) {
+                results.put(key, match(restLetter, restPattern, results) || match(restLetter, p, results) || match(s, restPattern, results));
             } else {
-                results.put(key, match(subString, subPattern, results));
+                results.put(key, match(s, restPattern, results));
             }
-        } else if (".*".equals(pattern)) {
-            if (s.length() == 0) {
-                results.put(key, match(subString, subPattern, results));
-            } else {
-                results.put(key, match(subString, subPattern, results) || match(subString,  p, results) || match(s, subPattern, results));
-            }
-        } else if (pattern.endsWith("*")) {
-            if (s.length() == 0) {
-                results.put(key, match(s, subPattern, results));
-            } else {
-                if (pattern.contains(letter)) {
-                    results.put(key, match(subString, subPattern, results) || match(subString, p, results));
-                } else {
-                    results.put(key, match(s, subPattern, results));
-                }
-            }
-
         } else {
-            if (s.length() == 0) {
-                results.put(key, false);
-            } else {
-                results.put(key, pattern.equals(letter) && match(subString, subPattern, results));
-            }
+            results.put(key, currentPattern.equals(currentLetter) && (match(restLetter, restPattern, results)));
         }
         return results.get(key);
+    }
+
+    private boolean parse(String pattern) {
+        if (pattern.length() % 2 == 1) {
+            return false;
+        }
+        for (int i = 1; i < pattern.length(); ) {
+            if (!"*".equals(pattern.substring(i, i + 1))) {
+                return false;
+            }
+            i = i + 2;
+        }
+        return true;
     }
 
     public static void main(String[] args) {
@@ -134,11 +124,12 @@ public class Regular_Expression_Matching {
         // expected true
 //        System.out.println(isMatch("aaa", "a*a"));
         // expected true
-//        System.out.println(isMatch("aaa", "ab*ac*a"));
+        System.out.println(new Regular_Expression_Matching().isMatch("aaa", "ab*ac*a"));
         // expected false
 
 //        System.out.println(isMatch("a", ".*..a*"));
         // expected true
-        System.out.println(isMatch("baabbbaccbccacacc", "c*..b*a*a.*a..*c"));
+//        System.out.println(isMatch("baabbbaccbccacacc", "c*..b*a*a.*a..*c"));
+
     }
 }
