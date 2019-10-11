@@ -1,4 +1,4 @@
-package com.hsb.leetcode.easy;
+package com.hsb.leetcode.medium;
 
 /**
  * 类描述:
@@ -51,6 +51,7 @@ public class Pow_x_n {
             }
         }
         double value = myPow(x, n / 2);
+        // 本题的精髓部分，不是逐个去累乘，而是将其进行分拆，相同的部分结果是一致的，减少计算量
         if (n % 2 == 0) {
             return value * value;
         } else {
