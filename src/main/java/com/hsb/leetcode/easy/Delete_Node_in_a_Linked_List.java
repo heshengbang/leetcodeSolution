@@ -6,6 +6,8 @@ package com.hsb.leetcode.easy;
  * @since 2019/10/22 13:47
  */
 
+import com.hsb.leetcode.entity.ListNode;
+
 /**
  * Write a function to delete a node (except the tail) in a singly linked list, given only access to that node.
  * <p>
@@ -38,14 +40,5 @@ public class Delete_Node_in_a_Linked_List {
     public void deleteNode(ListNode node) {
         node.val = node.next.val;
         node.next = node.next.next;
-    }
-
-    public class ListNode {
-        int val;
-        ListNode next;
-
-        ListNode(int x) {
-            val = x;
-        }
     }
 }

@@ -6,6 +6,9 @@ package com.hsb.leetcode.easy;
  * @since 2019/10/22 13:54
  */
 
+import com.hsb.leetcode.ToolUtils;
+import com.hsb.leetcode.entity.ListNode;
+
 /**
  *
  * Given a linked list, remove the n-th node from the end of list and return its head.
@@ -50,25 +53,9 @@ public class Remove_Nth_Node_From_End_of_List {
         }
     }
 
-    public static ListNode construct(int[] array) {
-        ListNode head = null;
-        ListNode current = null;
-        for (int item: array) {
-            if (current == null) {
-                head = new ListNode(item);
-                current = head;
-            } else {
-                ListNode next = new ListNode(item);
-                current.next = next;
-                current = next;
-            }
-        }
-        return head;
-    }
-
 
     public static void main(String[] args) {
-        ListNode head = construct(new int[] {1,2,3,4,5});
+        ListNode head = ToolUtils.construct(new int[] {1,2,3,4,5});
         Remove_Nth_Node_From_End_of_List item = new Remove_Nth_Node_From_End_of_List();
         ListNode result = item.removeNthFromEnd(head, 2);
         System.out.println(result);

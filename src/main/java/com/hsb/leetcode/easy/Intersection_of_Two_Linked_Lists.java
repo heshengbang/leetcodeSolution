@@ -8,6 +8,8 @@ package com.hsb.leetcode.easy;
  * email: trulyheshengbang@gmail.com
  */
 
+import com.hsb.leetcode.entity.ListNode;
+
 /**
  *
  * Write a program to find the node at which the intersection of two singly linked lists begins.
@@ -102,14 +104,5 @@ public class Intersection_of_Two_Linked_Lists {
             }
         }
         return head;
-    }
-}
-
-class ListNode {
-    int val;
-    ListNode next;
-    ListNode(int x) {
-        val = x;
-        next = null;
     }
 }
