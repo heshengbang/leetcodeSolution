@@ -2,10 +2,9 @@ package com.hsb.leetcode.easy;
 
 /*
  * 类描述:
- * Copyright 多点生活（成都）科技有限公司
  * @since 2019/11/5 16:20
  * @version 1.0
- * @author hu.he@dmall.com 何虎
+ * @author heshengbnag
  *************************************************
  */
 

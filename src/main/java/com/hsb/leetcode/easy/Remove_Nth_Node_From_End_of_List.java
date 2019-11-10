@@ -55,7 +55,7 @@ public class Remove_Nth_Node_From_End_of_List {
 
 
     public static void main(String[] args) {
-        ListNode head = ToolUtils.construct(new int[] {1,2,3,4,5});
+        ListNode head = ToolUtils.constructListNode(new int[] {1,2,3,4,5});
         Remove_Nth_Node_From_End_of_List item = new Remove_Nth_Node_From_End_of_List();
         ListNode result = item.removeNthFromEnd(head, 2);
         System.out.println(result);
