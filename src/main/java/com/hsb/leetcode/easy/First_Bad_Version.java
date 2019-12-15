@@ -29,10 +29,23 @@ public class First_Bad_Version extends VersionControl {
         }
     }
 
+    public int firstBadVersion1(int n) {
+        int left = 1, right = n, mid;
+        while (left < right) {
+            mid = left + (right - left) / 2;
+            if (isBadVersion(mid)) {
+                right = mid;
+            } else {
+                left = mid + 1;
+            }
+        }
+        return right;
+    }
+
     public static void main(String[] args) {
-        First_Bad_Version.badVersion = 1702766719;
+        First_Bad_Version.badVersion = 2;
         First_Bad_Version item = new First_Bad_Version();
-        System.out.println(item.firstBadVersion(2126753390));
+        System.out.println(item.firstBadVersion(2));
     }
 
 }
