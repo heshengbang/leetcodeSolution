@@ -35,9 +35,7 @@ public class House_Robber {
 
 
     private int[] trueTemp;
-    private boolean[] trueFlag;
     private int[] falseTemp;
-    private boolean[] falseFlag;
     public int rob(int[] nums) {
         if (nums.length == 0) {
             return 0;
@@ -45,20 +43,22 @@ public class House_Robber {
             return nums[0];
         }
         trueTemp = new int[nums.length];
-        trueFlag = new boolean[nums.length];
         falseTemp = new int[nums.length];
-        falseFlag = new boolean[nums.length];
+        for (int i = 0; i < nums.length; i++) {
+            trueTemp[i] = -1;
+            falseTemp[i] = -1;
+        }
         int hasNext = recursion(nums, 1, true);
         int notNext = recursion(nums, 1, false) + nums[0];
         return hasNext < notNext ? notNext : hasNext;
     }
     private int recursion(int[] nums, int index, boolean next) {
         if (next) {
-            if (trueFlag[index]) {
+            if (trueTemp[index] > -1) {
                 return trueTemp[index];
             }
         } else {
-            if (falseFlag[index]) {
+            if (falseTemp[index] > -1) {
                 return falseTemp[index];
             }
         }
@@ -77,10 +77,8 @@ public class House_Robber {
         }
         int result = hasNext < notNext ? notNext : hasNext;
         if (next) {
-            trueFlag[index] = true;
             trueTemp[index] = result;
         } else {
-            falseFlag[index] = true;
             falseTemp[index] = result;
         }
         return result;
@@ -100,7 +98,7 @@ public class House_Robber {
 
     public static void main(String[] args) {
         House_Robber item = new House_Robber();
-        int[] params = {10,2,3,10,5,10};
-        System.out.println(item.rob2(params));
+        int[] params = {1,2,3,1};
+        System.out.println(item.rob(params));
     }
 }
