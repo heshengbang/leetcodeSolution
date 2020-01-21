@@ -22,7 +22,7 @@ public class Sum_3_closest {
         int closest = Integer.MAX_VALUE;
         int result = 0;
         for (int i = 0; i < nums.length; i++) {
-            int start = 0, end = nums.length - 1;
+            int start = i + 1, end = nums.length - 1;
             while (start < end) {
                 if (start == i) {
                     start++;
@@ -50,8 +50,8 @@ public class Sum_3_closest {
 
     public static void main(String[] args) {
         Sum_3_closest item = new Sum_3_closest();
-        int[] nums = {1,1,1,1};
-        int target = 3;
+        int[] nums = {0,2,1,-3};
+        int target = 0;
         System.out.println(item.threeSumClosest(nums, target));
     }
 }
