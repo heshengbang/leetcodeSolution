@@ -26,6 +26,14 @@ public class ToolUtils {
         return head;
     }
 
+    public static void printListNode(ListNode param) {
+        while (param != null) {
+            System.out.print(param.val + " ");
+            param = param.next;
+        }
+        System.out.println();
+    }
+
     public static TreeNode constructTreeNode(Integer[] array) {
         return createBinaryTreeByArray(array, 0);
     }
