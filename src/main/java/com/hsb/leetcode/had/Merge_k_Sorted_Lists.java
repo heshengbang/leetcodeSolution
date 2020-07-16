@@ -13,35 +13,45 @@ import com.hsb.leetcode.entity.ListNode;
 
 public class Merge_k_Sorted_Lists {
     public ListNode mergeKLists(ListNode[] lists) {
-        if (lists.length == 0) {
+        if (lists == null || lists.length == 0) {
             return null;
-        } else if (lists.length == 1) {
-            return lists[0];
         }
-        ListNode head = lists[0];
-        for (int i = 1; i < lists.length; i++) {
-            head = mergeLists(head, lists[i]);
-        }
-        return head;
+        return mergeKLists(lists, 0, lists.length - 1);
     }
 
-    private ListNode mergeLists(ListNode l1, ListNode l2) {
-        ListNode head;
-        if (l1 == null) {
-            return l2;
-        }
-        if (l2 == null) {
-            return l1;
-        }
-        if (l1.val < l2.val) {
-            head = new ListNode(l1.val);
-            head.next = mergeLists(l1.next, l2);
+    public ListNode mergeKLists(ListNode[] lists, int start, int end) {
+        if (start == end) {
+            return lists[start];
+        } else if (start < end) {
+            int mid = (end - start) / 2 + start;
+            ListNode left = mergeKLists(lists, start, mid);
+            ListNode right = mergeKLists(lists, mid + 1, end);
+            return mergeTwoLists(left, right);
         } else {
-            // l2 <= l1
-            head = new ListNode(l2.val);
-            head.next = mergeLists(l1, l2.next);
+            return null;
         }
-        return head;
+    }
+
+    private ListNode mergeTwoLists(ListNode l1, ListNode l2) {
+        ListNode head = new ListNode(0);
+        ListNode next = head;
+        while (l1 != null && l2 != null) {
+            if (l1.val < l2.val) {
+                next.next = l1;
+                l1 = l1.next;
+            } else {
+                // l2 <= l1
+                next.next = l2;
+                l2 = l2.next;
+            }
+            next = next.next;
+        }
+        if (l1 != null) {
+            next.next = l1;
+        } else {
+            next.next = l2;
+        }
+        return head.next;
     }
 
     public static void main(String[] args) {
