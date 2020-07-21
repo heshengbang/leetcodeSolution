@@ -78,12 +78,81 @@ public class Sum_3 {
 
     public static void main(String[] args) {
         Sum_3 item = new Sum_3();
-        List<List<Integer>> results = item.threeSum(new int[]{0, 0, 0});
+        List<List<Integer>> results = item.threeSum1(new int[]{-1, 0, 1, 2, -1, -4});
         for (List<Integer> list : results) {
             for (Integer integer : list) {
                 System.out.print(integer + " ");
             }
             System.out.println();
         }
+    }
+
+    public List<List<Integer>> threeSum1(int[] nums) {
+        nums = sortArray(nums);
+        List<List<Integer>> results = new ArrayList<>();
+        for (int i = 0; i < nums.length; i++) {
+            if (nums[i] >0) {
+                break;
+            }
+            results.addAll(twoSum(nums, i +1, nums.length - 1, nums[i], i));
+            while (i < nums.length - 1 && nums[i] == nums[i+1]) {
+                i++;
+            }
+        }
+        return results;
+    }
+
+    public int[] sortArray(int[] nums) {
+        int maxValue = Integer.MIN_VALUE, minValue = Integer.MAX_VALUE;
+        for (int num: nums) {
+            if (num < minValue) {
+                minValue = num;
+            }
+            if (num > maxValue) {
+                maxValue = num;
+            }
+        }
+        int[] count = new int[maxValue - minValue + 1];
+        for (int num: nums) {
+            count[num - minValue]++;
+        }
+        int pointer = 0;
+        for (int i = 0; i < count.length; i++) {
+            while (count[i] > 0) {
+                nums[pointer] = minValue + i;
+                pointer++;
+                count[i]--;
+            }
+        }
+        return nums;
+    }
+
+    private List<List<Integer>> twoSum(int[] nums, int start, int end, int target, int targetIndex) {
+        List<List<Integer>> results = new ArrayList<>();
+        while (start < end) {
+            if (nums[start] + nums[end] + target == 0) {
+                results.add(Arrays.asList(nums[targetIndex], nums[start], nums[end]));
+                while (start < end && nums[start] == nums[start + 1]) {
+                    start++;
+                }
+                start++;
+                while (start < end && nums[end] == nums[end - 1]) {
+                    end--;
+                }
+                end--;
+            } else if (nums[start] + nums[end] + target < 0) {
+                while (start < end && nums[start] == nums[start + 1]) {
+                    start++;
+                }
+                start++;
+            } else {
+                // nums[start] + nums[end] + target > 0
+                while (start < end && nums[end] == nums[end - 1]) {
+                    end--;
+                }
+                end--;
+            }
+        }
+        return results;
     }
 }
