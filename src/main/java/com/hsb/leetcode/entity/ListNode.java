@@ -11,6 +11,7 @@ package com.hsb.leetcode.entity;
 public class ListNode {
     public int val;
     public ListNode next;
+    public int count;
 
     public ListNode(int x) {
         val = x;

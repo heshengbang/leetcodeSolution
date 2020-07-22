@@ -18,10 +18,17 @@ public class Sum_4 {
         quickSort(nums, 0, nums.length - 1);
         List<List<Integer>> results = new ArrayList<>();
         for (int k = 0 ; k < nums.length - 3; k++) {
+            if (k > 0 && nums[k] == nums[k-1]) {
+                continue;
+            }
             for (int w = k + 1; w < nums.length - 2; w++) {
+                if (w > k + 1 && nums[w] == nums[w-1]) {
+                    continue;
+                }
                 int i = w + 1, j = nums.length - 1;
                 while (i < j) {
-                    if (nums[k] + nums[i] + nums[j] + nums[w] == target) {
+                    int sum = nums[k] + nums[i] + nums[j] + nums[w];
+                    if (sum == target) {
                         results.add(Arrays.asList(nums[k], nums[w], nums[i], nums[j]));
                         while (i < j && nums[i] == nums[i+1]) {
                             i++;
@@ -31,7 +38,7 @@ public class Sum_4 {
                             j--;
                         }
                         j--;
-                    } else if (nums[k] + nums[i] + nums[j] + nums[w] < target) {
+                    } else if (sum < target) {
                         while (i < j && nums[i] == nums[i+1]) {
                             i++;
                         }
@@ -43,12 +50,6 @@ public class Sum_4 {
                         j--;
                     }
                 }
-                while (w < nums.length - 2 && nums[w] == nums[w+1]) {
-                    w++;
-                }
-            }
-            while (k < nums.length - 3 && nums[k] == nums[k+1]) {
-                k++;
             }
         }
         return results;
