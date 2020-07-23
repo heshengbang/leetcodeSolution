@@ -36,35 +36,16 @@ public class Interleaving_String {
             return false;
         }
         boolean[][] status = new boolean[s1.length() + 1][s2.length() + 1];
-        String[][] result = new String[s1.length() + 1][s2.length() + 1];
-        result[0][0] = "";
         status[0][0] = true;
         for (int k = 1; k < s1.length() + 1; k++) {
-            result[k][0] = s1.substring(0, k);
-            if (s3.startsWith(result[k][0])) {
-                status[k][0] = true;
-            }
+            status[k][0] = status[k - 1][0] && s3.charAt(k - 1) == s1.charAt(k - 1);
         }
         for (int k = 1; k < s2.length() + 1; k++) {
-            result[0][k] = s2.substring(0, k);
-            if (s3.startsWith(result[0][k])) {
-                status[0][k] = true;
-            }
+            status[0][k] = status[0][k - 1] && s3.charAt(k - 1) == s2.charAt(k - 1);
         }
         for (int i = 1; i < s1.length() + 1; i++) {
             for (int j = 1; j < s2.length() + 1; j++) {
-                if (status[i][j - 1]) {
-                    if (s3.startsWith(result[i][j - 1] + s2.charAt( j - 1))) {
-                        status[i][j] = true;
-                        result[i][j] = result[i][j - 1] + s2.charAt( j - 1);
-                    }
-                }
-                if (status[i - 1][j]) {
-                    if (s3.startsWith(result[i - 1][j] + s1.charAt(i - 1))) {
-                        status[i][j] = true;
-                        result[i][j] = result[i - 1][j] + s1.charAt(i - 1);
-                    }
-                }
+                status[i][j] = (status[i - 1][j]&&s1.charAt(i - 1) == s3.charAt(j + i - 1)) || (status[i][j - 1]&&s2.charAt(j - 1) == s3.charAt(i + j - 1));
             }
         }
         return status[s1.length()][s2.length()];
