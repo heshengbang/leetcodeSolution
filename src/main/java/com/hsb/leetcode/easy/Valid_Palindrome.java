@@ -36,7 +36,7 @@ public class Valid_Palindrome {
         }
         s = s.replaceAll("[^a-zA-Z0-9]", "");
         String palindrome = new StringBuilder(s).reverse().toString();
-        return palindrome.toUpperCase().equals(s.toUpperCase());
+        return palindrome.equalsIgnoreCase(s);
     }
 
     public static void main(String[] args) {
