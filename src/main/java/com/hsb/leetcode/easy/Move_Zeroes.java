@@ -2,15 +2,6 @@ package com.hsb.leetcode.easy;
 
 import java.util.Arrays;
 
-/**
- * 类描述:
- * Copyright 多点生活（成都）科技有限公司
- *
- * @author hu.he@dmall.com 何虎
- * @version 1.0
- * @since 2021/8/6 10:40
- */
-
 public class Move_Zeroes {
     public static void moveZeroes(int[] nums) {
         int index = nums.length - 1;

@@ -1,14 +1,5 @@
 package com.hsb.leetcode.easy;
 
-/**
- * 类描述:
- * Copyright 多点生活（成都）科技有限公司
- *
- * @author hu.he@dmall.com 何虎
- * @version 1.0
- * @since 2021/8/12 9:48
- */
-
 public class Rotate_String {
     public static boolean rotateString(String s, String goal) {
         for (int i = 0; i < s.length(); i++) {

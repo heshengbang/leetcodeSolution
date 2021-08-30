@@ -2,15 +2,6 @@ package com.hsb.leetcode.easy;
 
 import com.hsb.leetcode.entity.ListNode;
 
-/**
- * 类描述:
- * Copyright 多点生活（成都）科技有限公司
- *
- * @author hu.he@dmall.com 何虎
- * @version 1.0
- * @since 2021/8/4 9:53
- */
-
 public class Palindrome_Linked_List {
     public static boolean isPalindrome(ListNode head) {
         int count = 0;
