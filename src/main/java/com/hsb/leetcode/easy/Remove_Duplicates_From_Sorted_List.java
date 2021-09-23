@@ -1,5 +1,7 @@
 package com.hsb.leetcode.easy;
 
+import com.hsb.leetcode.entity.ListNode;
+
 /**
  * Blog: https://www.heshengbang.tech
  * Twitter: https://twitter.com/heshengbang
@@ -26,11 +28,6 @@ Output: 1->2->3
  */
 
 public class Remove_Duplicates_From_Sorted_List {
-    static  class ListNode {
-        int val;
-        ListNode next;
-        ListNode(int x) { val = x; }
-    }
 
     public static ListNode deleteDuplicates(ListNode head) {
         ListNode temp = head, next;

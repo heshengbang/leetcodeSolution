@@ -15,11 +15,32 @@ import java.util.List;
 
 public class Reverse_Nodes_in_k_Group {
     public static void main(String[] args) {
-        int[] param = {1};
+        int[] param = {1, 2, 3, 4, 5};
         ListNode head = ToolUtils.constructListNode(param);
         Reverse_Nodes_in_k_Group item = new Reverse_Nodes_in_k_Group();
-        head = item.reverseKGroup(head, 1);
+        head = item.reverseKGroup1(head, 3);
         ToolUtils.printListNode(head);
+    }
+
+    public ListNode reverseKGroup1(ListNode head, int k) {
+        ListNode dummy = new ListNode(-1), pre = dummy, cur = pre;
+        dummy.next = head;
+        int num = 0;
+        while ((cur = cur.next) != null) {
+            ++num;
+        }
+        while (num >= k) {
+            cur = pre.next;
+            for (int i = 0; i < k; ++i) {
+                ListNode tmp = cur.next;
+                cur.next = tmp.next;
+                tmp.next = pre.next;
+                pre.next = tmp;
+            }
+            pre = cur;
+            num -= k;
+        }
+        return dummy.next;
     }
 
 
@@ -75,4 +96,7 @@ public class Reverse_Nodes_in_k_Group {
         }
         return result;
     }
+
+
+
 }

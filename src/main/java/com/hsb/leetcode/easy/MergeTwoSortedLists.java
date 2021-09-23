@@ -1,5 +1,7 @@
 package com.hsb.leetcode.easy;
 
+import com.hsb.leetcode.entity.ListNode;
+
 /**
  * Blog: https://www.heshengbang.tech
  * Twitter: https://twitter.com/heshengbang
@@ -22,13 +24,6 @@ Output: 1->1->2->3->4->4
  */
 
 public class MergeTwoSortedLists {
-    public static class ListNode {
-        int val;
-        ListNode next;
-        ListNode(int x) {
-            val = x;
-        }
-    }
 
     private static ListNode mergeTwoLists(ListNode l1, ListNode l2) {
         ListNode result = new ListNode(0);
