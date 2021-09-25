@@ -1,5 +1,7 @@
 package com.hsb.leetcode.easy;
 
+import com.hsb.leetcode.entity.TreeNode;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -12,14 +14,8 @@ import java.util.List;
  * email: trulyheshengbang@gmail.com
  */
 public class Binary_Tree_Level_Order_Traversal_II {
-    private static class TreeNode {
-        int val;
-        TreeNode left;
-        TreeNode right;
-        TreeNode(int x) {
-            val = x;
-        }
-    }
+
+
 
     public List<List<Integer>> levelOrderBottom(TreeNode root) {
         List<List<Integer>> result = new ArrayList<List<Integer>>();
