@@ -72,6 +72,36 @@ public class RemoveElement {
 
     public static void main(String[] args) {
         int[] nums = {0,1,2,2,3,0,4,2};
-        System.out.println(removeElement(nums, 2));
+        System.out.println(removeElement1(nums, 2));
+
+
+
+//                int[] nums = {3,2,2,3};
+//        System.out.println(removeElement1(nums, 3));
+
+//        int[] nums = {1};
+//        System.out.println(removeElement1(nums, 1));
+    }
+
+
+    private static int removeElement1(int[] nums, int val) {
+        if (nums.length == 0) {
+            return 0;
+        }
+        int count = 0;
+        for (int i = 0, j = nums.length - 1; i <= j;) {
+            if (nums[i] == val) {
+                if (nums[j] != val) {
+                    nums[i] = nums[j];
+                    i++;
+                }
+                nums[j] = -1;
+                j--;
+                count++;
+            } else {
+                i++;
+            }
+        }
+        return nums.length - count;
     }
 }
