@@ -65,7 +65,30 @@ public class RemoveDuplicatesFromSortedArray {
     }
 
     public static void main(String[] args) {
-        int[] nums = {0,0,1,1,1,2,2,3,3,4};
-        System.out.println(removeDuplicates(nums));
+//        int[] nums = {0,0,1,1,1,2,2,3,3,4};
+//        System.out.println(removeDuplicates1(nums));
+
+        int[] nums = {1,1,2};
+        System.out.println(removeDuplicates1(nums));
+
+
+
+    }
+
+    private static int removeDuplicates1(int[] nums) {
+        if (nums.length == 0) {
+            return 0;
+        }
+        int tmp = -101;
+        int duplicate = 0;
+        for (int i = 0; i < nums.length;i++) {
+            if (nums[i] != tmp) {
+                tmp = nums[i];
+                nums[i - duplicate] = tmp;
+            } else {
+                duplicate ++;
+            }
+        }
+        return nums.length - duplicate;
     }
 }

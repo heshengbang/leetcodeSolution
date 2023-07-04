@@ -50,7 +50,7 @@ public class Majority_Element {
         return result;
     }
 
-    public static int majorityElement3(int[] nums) {
+    public static int majorityElement2(int[] nums) {
         int count=0, ret = 0;
         for (int num: nums) {
             if (count==0)
@@ -66,6 +66,6 @@ public class Majority_Element {
 
     public static void main(String[] args) {
         int[] nums = {2,2,1,1,1,2,2};
-        System.out.println(majorityElement3(nums));
+        System.out.println(majorityElement2(nums));
     }
 }
