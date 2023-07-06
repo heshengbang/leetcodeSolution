@@ -57,8 +57,27 @@ public class Best_Time_to_Buy_and_Sell_Stock_II {
         return profits;
     }
 
+    public int maxProfit1(int[] prices) {
+        if (prices.length < 2) {
+            return 0;
+        }
+        int profit = 0, buyPrice, sellPrice, length = prices.length;
+        for (int i = 0; i < length - 1;) {
+            while (i < length - 1 && prices[i] >= prices[i + 1]) {
+                i++;
+            }
+            buyPrice = prices[i];
+            while (i < length - 1 && prices[i] <= prices[i + 1]) {
+                i++;
+            }
+            sellPrice = prices[i];
+            profit = profit + (sellPrice - buyPrice);
+        }
+        return profit;
+    }
+
     public static void main(String[] args) {
-        int[] prices = {3, 3};
+        int[] prices = {7,1,2,1,6,4,7,3,4};
         System.out.println(maxProfit(prices));
     }
 }
