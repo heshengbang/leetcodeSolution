@@ -26,13 +26,10 @@ public class Jump_Game {
         int numsLength = nums.length;
         int index = 0;
         int currJump = nums[0];
-
         while(++index < numsLength && currJump-- != 0){
             currJump = Math.max(currJump, nums[index]);
         }
-
         System.gc();
-
         return index >= numsLength;
     }
 
