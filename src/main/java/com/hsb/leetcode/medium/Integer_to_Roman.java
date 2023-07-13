@@ -126,8 +126,68 @@ public class Integer_to_Roman {
         return result;
     }
 
+    public String intToRoman1(int num) {
+        StringBuffer sb = new StringBuffer("");
+        while (num > 0) {
+            if (num >= 1000) {
+                sb.append("M");
+                num -= 1000;
+            } else if (num >= 500) {
+                if (num + 100 >= 1000) {
+                    sb.append("CM");
+                    num = num - 900;
+                } else {
+                    sb.append("D");
+                    num -= 500;
+                }
+            } else if (num >= 100) {
+                if (num + 100 >= 500) {
+                    sb.append("CD");
+                    num -= 400;
+                } else {
+                    sb.append("C");
+                    num -= 100;
+                }
+            } else if (num >= 50) {
+                if (num + 10 >= 100) {
+                    sb.append("XC");
+                    num -= 90;
+                } else {
+                    sb.append("L");
+                    num -= 50;
+                }
+            } else if (num >= 10) {
+                if (num + 10 >= 50) {
+                    sb.append("XL");
+                    num -= 40;
+                } else {
+                    sb.append("X");
+                    num -= 10;
+                }
+            } else if (num >= 5) {
+                if (num + 1 >= 10) {
+                    sb.append("IX");
+                    num -= 9;
+                } else {
+                    sb.append("V");
+                    num -= 5;
+                }
+            } else {
+                if (num + 1 >= 5) {
+                    sb.append("IV");
+                    num -= 4;
+                } else {
+                    sb.append("I");
+                    num -= 1;
+                }
+            }
+        }
+        return sb.toString();
+    }
+
     public static void main(String[] args) {
         Integer_to_Roman item = new Integer_to_Roman();
-        System.out.println(item.intToRoman(3));
+        // MXMIV  MCMXCIV
+        System.out.println(item.intToRoman1(1066));
     }
 }

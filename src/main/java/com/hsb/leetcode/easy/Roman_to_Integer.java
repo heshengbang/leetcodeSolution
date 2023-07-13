@@ -1,5 +1,6 @@
 package com.hsb.leetcode.easy;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -60,9 +61,11 @@ Input: "MCMXCIV"
 Output: 1994
 Explanation: M = 1000, CM = 900, XC = 90 and IV = 4.
 
+https://leetcode.com/problems/roman-to-integer
+
  */
 
-public class Roman2Integer {
+public class Roman_to_Integer {
     private static int romanToInt(String s) {
         if (s == null || s.length() == 0) {
             return 0;
@@ -96,7 +99,42 @@ public class Roman2Integer {
         return result;
     }
 
+
+
+
+    public int romanToInt1(String s) {
+        Map<Character, Integer> memory = new HashMap<>();
+        memory.put('I', 1);
+        memory.put('V', 5);
+        memory.put('X', 10);
+        memory.put('L', 50);
+        memory.put('C', 100);
+        memory.put('D', 500);
+        memory.put('M', 1000);
+
+        char[] chars = s.toCharArray();
+        int total = 0;
+        for (int i = 0; i < chars.length; i++) {
+            if (i + 1 < chars.length) {
+                if (memory.get(chars[i]) >= memory.get(chars[i+1])) {
+                    total += memory.get(chars[i]);
+                } else {
+                    total -= memory.get(chars[i]);
+                }
+            } else {
+                total += memory.get(chars[i]);
+            }
+        }
+        System.gc();
+        return total;
+    }
+
+
     public static void main(String[] args) {
-        System.out.println(romanToInt("LVIII"));
+//        System.out.println(romanToInt("LVIII"));
+
+
+        Roman_to_Integer item = new Roman_to_Integer();
+        System.out.println(item.romanToInt1("MLXVI"));
     }
 }
