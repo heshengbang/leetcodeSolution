@@ -72,7 +72,49 @@ public class ZigZag_Conversion {
         return stringBuilder.toString();
     }
 
+    public String convert1(String s, int numRows) {
+        if (numRows == 1) {
+            return s;
+        }
+        int[] nums = new int[s.length()];
+        int row = 0;
+        boolean increase = true;
+        for (int i = 0; i < s.length(); i++) {
+            nums[i] = row;
+            if (row + 1 >= numRows) {
+                increase = false;
+            }
+            if (row - 1 < 0) {
+                increase = true;
+            }
+            if (increase) {
+                row++;
+            } else {
+                row--;
+            }
+        }
+        StringBuilder[] all = new StringBuilder[numRows];
+        for (int i = 0; i < s.length(); i++) {
+            if (all[nums[i]] == null) {
+                all[nums[i]] = new StringBuilder();
+            }
+            all[nums[i]].append(s.charAt(i));
+        }
+        StringBuilder result = new StringBuilder();
+        for (StringBuilder sb: all) {
+            if (sb == null || sb.length() == 0) {
+                continue;
+            }
+            result.append(sb);
+        }
+        return result.toString();
+    }
+
     public static void main(String[] args) {
-        System.out.println(convert("PAYPALISHIRING", 4));
+//        System.out.println(convert("PAYPALISHIRING", 4));
+
+        ZigZag_Conversion item = new ZigZag_Conversion();
+//        System.out.println(item.convert1("A", 2));
+//        System.out.println(item.convert1("AB", 1));
     }
 }

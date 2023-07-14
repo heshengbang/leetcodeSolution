@@ -28,6 +28,9 @@ Explanation: There is no common prefix among the input strings.
 Note:
 
 All given inputs are in lowercase letters a-z.
+
+https://leetcode.com/problems/longest-common-prefix
+
  */
 
 public class LongestCommonPrefix {
@@ -58,8 +61,46 @@ public class LongestCommonPrefix {
         return stringBuilder.toString();
     }
 
+    public String longestCommonPrefix1(String[] strs) {
+        StringBuffer sb = new StringBuffer();
+        sb.append(strs[0]);
+        for (int i = 1; i < strs.length; i++) {
+            for ( int j = 0; j < strs[i].length(); j++) {
+                if (sb.length() <= j) {
+                    break;
+                }
+                if (sb.charAt(j) == strs[i].charAt(j)) {
+                    continue;
+                } else {
+                    sb = sb.delete(j, sb.length());
+                }
+            }
+            if (strs[i].length() < sb.length()) {
+                sb.delete(strs[i].length(), sb.length());
+            }
+        }
+        return sb.toString();
+    }
+
+//    public String longestCommonPrefix2(String[] strs) {
+//        int[][] map = new int[strs.length][200];
+//        for (int i = 0; i < )
+//
+//
+//
+//
+//
+//
+//    }
+
     public static void main(String[] args) {
-        String[] strings = {"flower","flow","flight"};
-        System.out.println(longestCommonPrefix(strings));
+//        String[] strings = {"flower","flow","flight"};
+//        System.out.println(longestCommonPrefix(strings));
+
+//        String[] strings = {"ab", "a"};
+        String[] strings = {"dog","racecar","car"};
+
+        LongestCommonPrefix item = new LongestCommonPrefix();
+        System.out.println(item.longestCommonPrefix1(strings));
     }
 }

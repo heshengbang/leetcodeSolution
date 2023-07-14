@@ -23,6 +23,9 @@ Example:
 Input: "Hello World"
 Output: 5
 
+https://leetcode.com/problems/length-of-last-word
+
+
  */
 
 public class LengthOfLastWord {
@@ -45,7 +48,32 @@ public class LengthOfLastWord {
         return count;
     }
 
+    public int lengthOfLastWord1(String s) {
+        int length = 0;
+        boolean findLast = false;
+        for (int i = s.length() - 1; i >= 0; i--) {
+            if (s.charAt(i) == ' ') {
+                if (findLast) {
+                    break;
+                } else {
+                    continue;
+                }
+            } else {
+                findLast = true;
+                length++;
+            }
+        }
+        return length;
+    }
+
     public static void main(String[] args) {
-        System.out.println(lengthOfLastWord("Hello World"));
+//        System.out.println(lengthOfLastWord("Hello World"));
+
+        LengthOfLastWord item = new LengthOfLastWord();
+//        System.out.println(item.lengthOfLastWord1("Hello World"));
+
+        System.out.println(item.lengthOfLastWord1("   fly me   to   the moon  "));
+
+        System.out.println(item.lengthOfLastWord1("luffy is still joyboy"));
     }
 }
