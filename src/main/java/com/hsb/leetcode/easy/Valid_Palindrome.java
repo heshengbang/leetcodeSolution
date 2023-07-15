@@ -27,10 +27,12 @@ package com.hsb.leetcode.easy;
  * Input: "race a car"
  * Output: false
  *
+ * https://leetcode.com/problems/valid-palindrome
+ *
  */
 
 public class Valid_Palindrome {
-    public static boolean isPalindrome(String s) {
+    public boolean isPalindrome(String s) {
         if (s.length() == 0) {
             return true;
         }
@@ -39,7 +41,24 @@ public class Valid_Palindrome {
         return palindrome.equalsIgnoreCase(s);
     }
 
+    public boolean isPalindrome1(String s) {
+        StringBuilder sb = new StringBuilder();
+        s = s.toLowerCase();
+        for (int i = 0; i < s.length(); i++) {
+            char ch = s.charAt(i);
+            if ((ch >= 'a' && ch <= 'z') || (ch >= '0' && ch <= '9')) {
+                sb.append(ch);
+            }
+        }
+        String string = sb.toString();
+        String reverse = sb.reverse().toString();
+        return reverse.equals(string);
+    }
+
     public static void main(String[] args) {
-        System.out.println(isPalindrome("Marge, let's \"went.\" I await news telegram."));
+        Valid_Palindrome item = new Valid_Palindrome();
+        System.out.println(item.isPalindrome1("Marge, let's \"went.\" I await news telegram."));
+//        System.out.println(item.isPalindrome1("race a car"));
+//        System.out.println(item.isPalindrome1("A man, a plan, a canal: Panama"));
     }
 }
