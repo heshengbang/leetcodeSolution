@@ -40,8 +40,42 @@ public class Word_Pattern {
         return true;
     }
 
+    public boolean wordPattern1(String pattern, String s) {
+        String[] strings = s.split(" ");
+        if (pattern.length() != strings.length) {
+            return false;
+        }
+        char[] chars = pattern.toCharArray();
+        HashMap<Character, String> memory = new HashMap<>();
+        HashMap<String, Character> reverse = new HashMap<>();
+        for (int i = 0; i < chars.length;i++) {
+            if (memory.containsKey(chars[i])) {
+                String tmp = memory.get(chars[i]);
+                if (!tmp.equals(strings[i])) {
+                    return false;
+                }
+            } else {
+                memory.put(chars[i], strings[i]);
+            }
+
+            if (reverse.containsKey(strings[i])) {
+                char ch = reverse.get(strings[i]);
+                if (ch != chars[i]) {
+                    return false;
+                }
+            } else {
+                reverse.put(strings[i], chars[i]);
+            }
+        }
+        return true;
+    }
+
     public static void main(String[] args) {
         Word_Pattern item = new Word_Pattern();
-        System.out.println(item.wordPattern("aaa", "aa aa aa aa"));
+//        System.out.println(item.wordPattern1("aaa", "aa aa aa aa"));
+//        System.out.println(item.wordPattern1("abba", "dog cat cat dog"));
+//        System.out.println(item.wordPattern1("abba", "dog cat cat fish"));
+//        System.out.println(item.wordPattern1("aaaa", "dog cat cat dog"));
+        System.out.println(item.wordPattern1("abba", "dog dog dog dog"));
     }
 }
