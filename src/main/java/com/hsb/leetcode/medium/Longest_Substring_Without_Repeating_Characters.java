@@ -6,6 +6,9 @@ package com.hsb.leetcode.medium;
  * https://github.com/heshengbang
  * www.heshengbang.men
  * email: trulyheshengbang@gmail.com
+ *
+ * https://leetcode.com/problems/longest-substring-without-repeating-characters
+ *
  */
 public class Longest_Substring_Without_Repeating_Characters {
     public int lengthOfLongestSubstring(String s) {
@@ -30,8 +33,36 @@ public class Longest_Substring_Without_Repeating_Characters {
         return result;
     }
 
+
+    public int lengthOfLongestSubstring2(String s) {
+        int[] table = new int[128];
+        char[] chars = s.toCharArray();
+        int left = 0, right = 0, length = s.length(), result = 0, count = 0;
+        while (left <= right && right < length) {
+
+            while (right < length && table[chars[right] - ' '] == 0) {
+                count++;
+                table[chars[right] - ' '] ++;
+                right++;
+            }
+
+            result = Math.max(count, result);
+
+            while (left <= right && right < length && table[chars[right] - ' '] > 0) {
+                table[chars[left] - ' '] --;
+                left++;
+                count--;
+            }
+        }
+        return result;
+    }
+
     public static void main(String[] args) {
         Longest_Substring_Without_Repeating_Characters item = new Longest_Substring_Without_Repeating_Characters();
-        System.out.println(item.lengthOfLongestSubstring("bbbbb"));
+//        System.out.println(item.lengthOfLongestSubstring2("bbbbb"));
+//        System.out.println(item.lengthOfLongestSubstring2("abcabcbb"));
+        System.out.println(item.lengthOfLongestSubstring2("pwwkew"));
+
+
     }
 }
