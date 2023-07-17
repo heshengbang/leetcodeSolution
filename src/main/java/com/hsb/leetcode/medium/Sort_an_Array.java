@@ -38,9 +38,54 @@ public class Sort_an_Array {
         return nums;
     }
 
+
+    public int[] sortArray2(int[] nums) {
+        quickSort2(nums, 0, nums.length - 1);
+        return nums;
+    }
+
+
+    private void quickSort2(int[] nums, int start, int end) {
+        if (start == end) {
+            return;
+        }
+        int left = start, right = end, flag = nums[end];
+        while (left < right) {
+            if (nums[left] <= nums[right]) {
+                if (nums[left] == flag) {
+                    right--;
+                } else {
+                    left++;
+                }
+            } else {
+                if (nums[left] == flag) {
+                    int tmp = nums[right];
+                    nums[right] = flag;
+                    nums[left] = tmp;
+                    left++;
+                } else {
+                    int tmp = nums[left];
+                    nums[left] = nums[right];
+                    nums[right] = tmp;
+                    right--;
+                }
+            }
+        }
+        if (start < left - 1) {
+            quickSort2(nums, start, left - 1);
+        }
+        if (right + 1 < end) {
+            quickSort2(nums, right + 1, end);
+        }
+    }
+
     public static void main(String[] args) {
         Sort_an_Array executor = new Sort_an_Array();
-        System.out.println(Arrays.toString(executor.sortArray(new int[]{-100, 5,1,1,2,0,0})));
+        System.out.println(Arrays.toString(executor.sortArray2(new int[]{-100, 5,1,1,2,0,0})));
+
+//        System.out.println(Arrays.toString(executor.sortArray2(new int[]{5,2,3,1})));
+
+
     }
 
     public int[] sortArray1(int[] nums) {
