@@ -1,6 +1,7 @@
 package com.hsb.leetcode.easy;
 
 import java.util.Arrays;
+import java.util.LinkedList;
 
 /**
  * Blog: https://www.heshengbang.tech
@@ -40,6 +41,38 @@ public class TwoSum {
             }
         }
         return result;
+    }
+
+
+    public int[] twoSum1(int[] nums, int target) {
+        int[] indexMem = new int[nums.length];
+//        quickSort(nums, indexMem, 0, nums.length - 1);
+        int[] ans = new int[2];
+
+
+        return nums;
+
+    }
+
+    private void quickSort(int[] nums, int start, int end) {
+        int left = start, right = end, key = nums[start];
+        while (left < right) {
+            while (left < right && key <= nums[right]) {
+                right--;
+            }
+            while (left < right && nums[left] <= key) {
+                left++;
+            }
+            if (left < right) {
+                int tmp = nums[left];
+                nums[left] = nums[right];
+                nums[right] = tmp;
+            }
+        }
+        nums[start] = nums[left];
+        nums[left] = key;
+        quickSort(nums, start, left - 1);
+        quickSort(nums, right + 1, end);
     }
 
     public static void main(String[] args) {

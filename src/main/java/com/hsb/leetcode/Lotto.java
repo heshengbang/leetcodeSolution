@@ -1,5 +1,8 @@
 package com.hsb.leetcode;
 
+import sun.misc.Unsafe;
+
+import java.lang.reflect.Field;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -15,7 +18,18 @@ import java.util.List;
  */
 public class Lotto {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws NoSuchFieldException, IllegalAccessException {
+        Field field = Unsafe.class.getDeclaredField("theUnsafe");
+        field.setAccessible(true);
+        Unsafe unsafe = (Unsafe) field.get(null);
+
+        long address = unsafe.allocateMemory(4);
+        unsafe.putInt(address, 15);
+        System.out.println(unsafe.getInt(address));
+    }
+
+    public static void main1(String[] args) {
+
         List<Integer> current = Arrays.asList(3, 8, 21, 26, 33);
 //        String original = "03 08 21 26 33 04 05 07 09 13 14 33 02 04 01 04 18 24 28 02 03 06 22 28 29 33 02 07 16 18 24 25" +
 //                " 27 02 07 10 12 15 17 19 02 03 06 13 16 19 29 03 07 11 17 19 29 33 08 09 01 03 14 26 30 06 11 01 04 14 15" +
