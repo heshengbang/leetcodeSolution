@@ -3,6 +3,73 @@ package com.hsb.leetcode.dp;
 public class Lesson11 {
 
     /**
+     * 给定一个未排序的整数数组arrays，找到最长上升序列的个数
+     *      给定数组长度不会超过2000，并且结果一定是一个32位有符号整数
+     * 首先，这个问题问的最长上升序列的个数，其实换个说法就是最长路径的不同走法
+     *
+     * 要找到最长上升序列的个数，首先应该知道最长上升序列的长度，所以第一步应该是求这个长度，参考findLengthOfLIS()的解法
+     * 求最长长度的过程中会定义一个备忘录dp[]，求这个dp的过程中，其实会接触到每一个可能性，因此可以再定义一个备忘录用以计数
+     * 比如定义一个counts，这个counts[i]就表示以i为最后一个上升元素的最长序列的个数
+     *  初始状态可以确定的是，counts[i]至少都是1，因为即便单个元素的上升序列，最少的个数也是1，更何况即便有大于1的情况，也至少应该出现1次
+     *  状态参数依然是索引，因为只有索引不断变化，才能取得各个位置的最长上升序列的个数
+     *  状态转移方程可以参考LIS中的方式，count[i]应该依赖于以下内容：
+     *   x < i
+     *      arrays[x] < arrays[i]，此时arrays[i]是可以跟在dp[x]所在的上升序列的
+     *          对于dp[i]来说，则需要判断是否需要更新
+     *              如果dp[i] < dp[x] + 1，则表明之前的最长上升序列并不是最长的，这里还有更长的，所以dp[i] = dp[x] + 1
+     *                  而counts[i]则显然应该和counts[x]保持一致，因为dp[i]的值更新为dp[x] + 1
+     *              如果dp[i] == dp[x] + 1，则表明之前目前的最长上升序列长度和x位置的最长上升序列加arrays[i]是一致的，所以dp[i]无需变化
+     *                  而counts[i]是计算最长个数的，所以应该把dp[x]的个数加上得到新的counts[i]
+     *              如果dp[i] > dp[x] + 1，则表明目前是最长上升序列
+     *                  而counts[i]自然无需更新
+     *     arrays[x] >= arrays[i]，此时i无法和x位置的最长上升序列构成更长的上升序列，dp[i]和counts[i]都无需更新
+     *
+     * 在结束完循环以后，dp[]中保存了最长上升序列的长度，而counts[]中保存了最长上升序列的个数，由于组成最长上升序列的元素可以不一样，所以最长上升序列的长度可能在dp[]中有多个
+     * 因此在之前的循环中，应该保存最长的长度，然后在循环结束后，遍历dp[]，如果和最长长度相等，则将counts[]位置的值加到答案中
+     * 遍历结束后，获得答案并返回
+     *
+     * @param arrays 给定数组
+     * @return 最长上升序列的个数
+     */
+    private int findNumOfLIS(int[] arrays) {
+        int length = arrays.length;
+        if (length == 0 || length == 1) {
+            return length;
+        }
+        // 初始化的时候，把1当作最长上升序列的长度
+        int[] dp = new int[length];
+        for (int i = 0; i < length; i++) {
+            dp[i] = 1;
+        }
+        // 定义一个数组，用来存储i这个位置，可以获得dp[i]的不同方式
+        int[] counts = new int[length];
+        for (int i = 0; i < length; i++) {
+            counts[i] = 1;
+        }
+        int maxLengthOfLIS = 1;
+        for (int i = 1; i < length; i++) {
+            for (int j = 0; j < i; j++) {
+                if (arrays[j] < arrays[i]) {
+                    if (dp[i] < dp[j] + 1) {
+                        counts[i] = counts[j];
+                        dp[i] = dp[j] + 1;
+                    } else if (dp[i] == dp[j] + 1) {
+                        counts[i] = counts[i] + counts[j];
+                    }
+                }
+            }
+            maxLengthOfLIS = Math.max(maxLengthOfLIS, dp[i]);
+        }
+        int ans = 0;
+        for (int i = 0; i < length; i++) {
+            if (dp[i] == maxLengthOfLIS) {
+                ans += counts[i];
+            }
+        }
+        return ans;
+    }
+
+    /**
      *
      * 给定一个无序的整数数组arrays，找到其中最长的上升子序列的长度
      *      1. 可能有多个最长上升序列，返回长度即可
@@ -97,7 +164,7 @@ public class Lesson11 {
         int[] array1 = {6, 6, 6, 6, 6};
         int[] array2 = {1, 3, 5, 0, 7};
         int[] array3 = {10, 9, 1, 5, 2, 6, 66, 18};
-        System.out.println(it.findLengthOfLIS(array3));
+        System.out.println(it.findNumOfLIS(array2));
     }
 
 }
