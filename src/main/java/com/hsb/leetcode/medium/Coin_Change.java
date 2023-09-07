@@ -28,6 +28,83 @@ package com.hsb.leetcode.medium;
  *
  */
 public class Coin_Change {
+
+    /**
+     * 硬币数量不限制，完全背包问题
+     *
+     * 初始状态，如果待组成的金额为0，则所使用的最少硬币数量为0
+     *
+     * 子问题：如果金额为i，那么尽量选择大的硬币面额比如x，那么剩余的金额i - x的问题解决就是一个子问题
+     *
+     * 状态参数选择金额的数额，那么状态存储备忘录就是dp[n]，其中dp[i]表示组成数额i所需要的最少硬币数量
+     *
+     * 状态转移方程就是dp[i] = Min(dp[i - x]), x ∈ coins
+     *
+     * @param coins 给定的硬币面额
+     * @param amount 目标金额
+     * @return 最少的硬币数量
+     */
+    public int coinChangeWith1DDP(int[] coins, int amount) {
+        if (amount == 0) {
+            return 0;
+        }
+        int[] dp = new int[amount + 1];
+        dp[0] = 0;
+        for (int i = 1; i < amount + 1; i++) {
+            int min = Integer.MAX_VALUE;
+            for (int coin: coins) {
+                if (coin <= i && dp[i - coin] != -1) {
+                    min = Math.min(min, dp[i - coin] + 1);
+                }
+            }
+            // 如果没有找到合适的硬币就赋值-1
+            if (min == Integer.MAX_VALUE) {
+                min = -1;
+            }
+            dp[i] = min;
+        }
+        return dp[amount];
+    }
+
+    /**
+     * 上一个解法没考虑到coin的数量是无限制的
+     * @return 最少的硬币数量
+     */
+    public int coinChangeWith1DDP1(int[] coins, int amount) {
+        if (amount == 0) {
+            return 0;
+        }
+        int[] dp = new int[amount + 1];
+        dp[0] = 0;
+        for (int i = 1; i < amount + 1; i++) {
+            int min = Integer.MAX_VALUE;
+            for (int coin: coins) {
+                // 如果硬币面额大于当前金额，则什么都不做
+                if (coin <= i) {
+                    // 当前硬币取最大数量
+                    int count = i / coin;
+                    // 从最大数量到不取这个硬币，遍历一次
+                    for (int j = count; j > 0; j--) {
+                        // 剩下的金额
+                        int rest = i - j * coin;
+                        // 如果硬币数量+子问题的数量为最少，则替换之前的最小值
+                        if (dp[rest] != -1) {
+                            min = Math.min(min, dp[rest] + j);
+                        }
+                    }
+                }
+            }
+            // 如果没有找到合适的硬币就赋值-1
+            if (min == Integer.MAX_VALUE) {
+                min = -1;
+            }
+            dp[i] = min;
+        }
+        return dp[amount];
+    }
+
+
+
     private static int[] resultCache = null;
     public static int coinChange(int[] coins, int amount) {
         if (resultCache == null) {
@@ -63,7 +140,9 @@ public class Coin_Change {
     }
 
     public static void main(String[] args) {
-        int[] param1 = {1,2,3,4,5,6,7,8,9};
-        System.out.println(coinChange(param1, 1997));
+//        int[] param1 = {1,2,3,4,5,6,7,8,9};
+        Coin_Change it = new Coin_Change();
+        int[] param1 = {1,2,5};
+        System.out.println(it.coinChangeWith1DDP1(param1, 11));
     }
 }

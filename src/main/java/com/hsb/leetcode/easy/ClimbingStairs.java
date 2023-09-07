@@ -38,6 +38,57 @@ package com.hsb.leetcode.easy;
  */
 
 public class ClimbingStairs {
+
+    /**
+     * You are climbing a staircase. It takes n steps to reach the top.
+     *
+     * Each time you can either climb 1 or 2 steps. In how many distinct ways can you climb to the top?
+     *
+     * 状态参数使用楼梯数
+     * 初始状态，当没有楼梯的时候，步数为0，当楼梯阶数是1的时候，到达方式也只有一种，当楼梯阶数为2的时候，到达方式有2种
+     * 存储状态备忘录使用 dp[n]，dp[i] 代表到达第i个台阶有多少种方法
+     * 状态转移方程 dp[i] = dp[i - 1] + dp[i - 2]
+     *  dp[i - 1]走1步就可以到dp[i]
+     *  dp[i - 2]走2步就可以到dp[i]
+     *
+     * @param n 台阶数
+     * @return 多少种方式
+     */
+    public int climbStairsWithDp(int n) {
+        // 初始状态
+        if (n == 0 || n == 1 || n == 2) {
+            return n;
+        }
+        // 状态存储备忘录
+        int[] ways = new int[n + 1];
+        // 状态初始化
+        ways[0] = 0;
+        ways[1] = 1;
+        ways[2] = 2;
+        for (int i = 3; i < n + 1; i++) {
+            // 状态转移方程，空间优化策略，只用三个变量即可
+            ways[i] = ways[i - 1] + ways[i - 2];
+        }
+        return ways[n];
+    }
+
+    public int climbStairsWithDp1(int n) {
+        if (n == 0 || n == 1 || n == 2) {
+            return n;
+        }
+        int[] ways = new int[2];
+        ways[0] = 1;
+        ways[1] = 2;
+        for (int i = 3; i < n + 1; i++) {
+            int tmp = ways[0] + ways[1];
+            ways[0] = ways[1];
+            ways[1] = tmp;
+        }
+        return ways[1];
+    }
+
+
+
     private static int climbStairs(int n) {
         int[] memo = new int[n+1];
         return myClimbStairs(n, n, memo);
@@ -55,6 +106,7 @@ public class ClimbingStairs {
     }
 
     public static void main(String[] args) {
-        System.out.println(climbStairs(3));
+        ClimbingStairs it = new ClimbingStairs();
+        System.out.println(it.climbStairsWithDp1(3));
     }
 }
