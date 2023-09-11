@@ -28,6 +28,41 @@ package com.hsb.leetcode.medium;
  */
 
 public class Longest_Palindromic_Substring {
+
+
+    public String longestPalindromeWithDP(String s) {
+        int length = s.length();
+        if (length == 1) {
+            return s;
+        }
+        boolean[][] dp = new boolean[length][length];
+        String ans = "";
+        int maxLength = 0;
+        for (int i = 0; i < length; i++) {
+            dp[i][i] = true;
+            ans = s.substring(i, i + 1);
+            maxLength = 1;
+        }
+        for (int i = length - 1; i >= 0; i--) {
+            for (int j = i + 1; j < length; j++) {
+                boolean b = s.charAt(i) == s.charAt(j);
+                if (j - i < 2) {
+                    dp[i][j] = b;
+                } else {
+                    dp[i][j] = dp[i + 1][j - 1] && b;
+                }
+
+                if (dp[i][j]) {
+                    if (maxLength < (j + 1 - i)) {
+                        maxLength = j + 1 - i;
+                        ans = s.substring(i, j + 1);
+                    }
+                }
+            }
+        }
+        return ans;
+    }
+
     public static String longestPalindrome1(String s) {
         if (s == null || s.length() < 2) {
             return s;
@@ -93,6 +128,12 @@ public class Longest_Palindromic_Substring {
     }
 
     public static void main(String[] args) {
-        System.out.println(longestPalindrome1("cbbd"));
+        Longest_Palindromic_Substring it = new Longest_Palindromic_Substring();
+//        System.out.println(it.longestPalindromeWithDP("aacabdkacaa"));
+
+//        System.out.println(it.longestPalindromeWithDP("babad"));
+//        System.out.println(it.longestPalindromeWithDP("cbbd"));
+
+        System.out.println(it.longestPalindromeWithDP("ac"));
     }
 }
