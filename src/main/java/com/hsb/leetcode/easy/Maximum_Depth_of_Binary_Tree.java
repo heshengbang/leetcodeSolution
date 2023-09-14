@@ -45,6 +45,26 @@ public class Maximum_Depth_of_Binary_Tree {
         }
     }
 
+
+    public int maxDepth1(TreeNode root) {
+        if (root == null) {
+            return 0;
+        } else if (root.left == null && root.right == null) {
+            return 1;
+        }
+
+        int left = 0;
+        if (root.left != null) {
+            left = maxDepth1(root.left);
+        }
+        int right = 0;
+        if (root.right != null) {
+            right = maxDepth1(root.right);
+        }
+        return (right > left ? right : left) + 1;
+    }
+
+
     private static int maxDepth(TreeNode root) {
         if (root == null) {
             return 0;

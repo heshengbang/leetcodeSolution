@@ -45,13 +45,15 @@ public class TwoSum {
 
 
     public int[] twoSum1(int[] nums, int target) {
-        int[] indexMem = new int[nums.length];
-//        quickSort(nums, indexMem, 0, nums.length - 1);
-        int[] ans = new int[2];
-
-
+        int length = nums.length;
+        for (int i = 0; i < length; i++) {
+            for (int j = i + 1; j < length;j++) {
+                if (nums[i] + nums[j] == target) {
+                    return new int[]{i, j};
+                }
+            }
+        }
         return nums;
-
     }
 
     private void quickSort(int[] nums, int start, int end) {

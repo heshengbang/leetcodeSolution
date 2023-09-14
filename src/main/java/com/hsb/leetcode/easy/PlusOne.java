@@ -34,6 +34,33 @@ Explanation: The array represents the integer 4321.
  */
 
 public class PlusOne {
+    public static int[] plusOne1(int[] digits) {
+        int length = digits.length;
+        int plusOne = 1;
+        for (int i = length - 1; i >= 0; i--) {
+            if (plusOne != 0) {
+                int tmp = digits[i] + plusOne;
+                if (tmp >= 10) {
+                    digits[i] = tmp % 10;
+                    plusOne = tmp / 10;
+                } else {
+                    plusOne = 0;
+                    digits[i] = tmp;
+                    return digits;
+                }
+            }
+        }
+        if (plusOne > 0) {
+            int[] result = new int[length + 1];
+            result[0] = plusOne;
+            for (int i = 1; i <= length; i++) {
+                result[i] = digits[i - 1];
+            }
+            return result;
+        }
+        return digits;
+    }
+
     public static int[] plusOne(int[] digits) {
         int one = 1;
         for (int i = digits.length - 1; i >= 0; i --) {

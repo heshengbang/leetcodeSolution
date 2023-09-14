@@ -38,6 +38,31 @@ package com.hsb.leetcode.easy;
 
 
 public class Linked_List_Cycle {
+
+    public boolean hasCycle1(ListNode head) {
+        if (head == null) {
+            return false;
+        }
+        ListNode next = head;
+        ListNode nn = null;
+        if (next != null) {
+            nn = next.next;
+        }
+        while (next != null && nn != null) {
+            if (next == nn) {
+                return true;
+            } else {
+                next = next.next;
+                nn = null;
+                if (next != null) {
+                    nn = next.next;
+                }
+            }
+        }
+        return false;
+    }
+
+
     public boolean hasCycle(ListNode head) {
         if (head == null) {
             return false;

@@ -46,6 +46,20 @@ package com.hsb.leetcode.easy;
  */
 
 public class Same_Tree {
+
+    public boolean isSameTree1(TreeNode p, TreeNode q) {
+        if (p == null && q == null) {
+            return true;
+        } else if (p == null || q == null) {
+            return false;
+        }
+        boolean value = p.val == q.val;
+        boolean left = isSameTree(p.left, q.left);
+        boolean right = isSameTree(p.right, q.right);
+        return value && left && right;
+    }
+
+
     private static class TreeNode {
         int val;
         TreeNode left;
