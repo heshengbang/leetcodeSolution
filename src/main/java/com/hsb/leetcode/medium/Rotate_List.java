@@ -7,6 +7,29 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Rotate_List {
+    public ListNode rotateRight1(ListNode head, int k) {
+        if (head == null || head.next == null) {
+            return head;
+        }
+        ListNode current = head;
+        int count = 1;
+        while (current.next != null) {
+            current = current.next;
+            count++;
+        }
+        current.next = head;
+        int rest = k % count;
+        int forNum = count - rest;
+        current = head;
+        for (int i = 0; i <= forNum; i++) {
+            current = current.next;
+        }
+        head = current.next;
+        current.next = null;
+        return head;
+    }
+
+
     public static ListNode rotateRight(ListNode head, int k) {
         if (head == null || head.next == null || k == 0) {
             return head;

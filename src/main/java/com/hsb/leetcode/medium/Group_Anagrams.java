@@ -3,10 +3,30 @@ package com.hsb.leetcode.medium;
 import java.util.*;
 
 public class Group_Anagrams extends AbstractList {
+
+    public List<List<String>> groupAnagrams1(String[] strs) {
+        Map<String, List<String>> map = new HashMap<>();
+        for (String str: strs) {
+            char[] chars = str.toCharArray();
+            Arrays.sort(chars);
+            String tmp = new String(chars);
+            if (map.containsKey(tmp)) {
+                map.get(tmp).add(str);
+            } else {
+                List<String> list = new ArrayList<>();
+                list.add(str);
+                map.put(tmp, list);
+            }
+        }
+        return new ArrayList<>(map.values());
+    }
+
+
     public static void main(String[] args) {
         String[] param = {"eat", "tea", "tan", "ate", "nat", "bat"};
+//        String[] param = {"", ""};
         Group_Anagrams item = new Group_Anagrams();
-        System.out.println(item.groupAnagrams(param));
+        System.out.println(item.groupAnagrams1(param));
     }
 
     public List<List<String>> groupAnagrams(String[] strs) {

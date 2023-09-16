@@ -9,6 +9,21 @@ import com.hsb.leetcode.entity.TreeNode;
 
 public class Validate_Binary_Search_Tree {
 
+    public boolean isValidBST2(TreeNode root) {
+        return recursion(root, null, null);
+    }
+
+    private boolean recursion(TreeNode root, Integer down_limit, Integer up_limit) {
+        if (root == null) {
+            return true;
+        }
+        if ((down_limit != null && root.val < down_limit) || (up_limit != null && up_limit < root.val)) {
+            return false;
+        } else {
+            return recursion(root.left, down_limit, root.val) && recursion(root.right, root.val, up_limit);
+        }
+    }
+
     public boolean isValidBST(TreeNode root) {
         if (root.left != null && root.right != null) {
             TreeNode biggest = findBig(root.left);
