@@ -8,6 +8,8 @@ package com.hsb.leetcode.easy;
  * email: trulyheshengbang@gmail.com
  */
 
+import com.hsb.leetcode.entity.TreeNode;
+
 /**
  * Path Sum
  * <p>
@@ -30,24 +32,15 @@ package com.hsb.leetcode.easy;
  * return true, as there exist a root-to-leaf path 5->4->11->2 which sum is 22.
  */
 public class Path_Sum {
-    private static class TreeNode {
-        int val;
-        TreeNode left;
-        TreeNode right;
 
-        TreeNode(int x) {
-            val = x;
-        }
-    }
-
-    public boolean hasPathSum(TreeNode root, int sum) {
+    public boolean hasPathSum(TreeNode root, int targetSum) {
         if (root == null) {
             return false;
         }
         if (root.left == null && root.right == null) {
-            return root.val == sum;
+            return root.val == targetSum;
         }
-        int rest = sum - root.val;
+        int rest = targetSum - root.val;
         if (root.left == null) {
             return hasPathSum(root.right, rest);
         }

@@ -7,7 +7,9 @@ package com.hsb.leetcode.easy;
  *************************************************
  */
 
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 /*
@@ -28,6 +30,29 @@ Explanation:
 
  */
 public class Happy_Number {
+
+    public boolean isHappy1(int n) {
+        Map<Integer, Object> map = new HashMap<>();
+        map.put(n, null);
+        int sum = n;
+        while(true) {
+            char[] chars = String.valueOf(sum).toCharArray();
+            sum = 0;
+            for(int i = 0; i < chars.length;i++) {
+                sum = sum + (chars[i] - '0')*(chars[i] - '0');
+            }
+            if (sum == 1) {
+                return true;
+            }
+            if (map.containsKey(sum)) {
+                return false;
+            } else {
+                map.put(sum, null);
+            }
+        }
+    }
+
+
     public boolean isHappy(int n) {
         Set<Integer> path = new HashSet<>();
         return  cycleCalculate(n, path);

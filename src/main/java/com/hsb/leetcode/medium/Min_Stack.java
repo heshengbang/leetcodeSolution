@@ -9,6 +9,8 @@ package com.hsb.leetcode.medium;
  * @author heshengbang
  */
 
+import com.hsb.leetcode.entity.ListNode;
+
 /**
  * Design a stack that supports push, pop, top, and retrieving the minimum element in constant time.
  * <p>
@@ -28,7 +30,9 @@ package com.hsb.leetcode.medium;
  */
 public class Min_Stack {
     public static void main(String[] args) {
-        MinStack obj = new MinStack();
+        MinStack1 obj = new MinStack1();
+        // ["MinStack","push","push","push","push","getMin","pop","getMin","pop","getMin","pop","getMin"]
+        // [[],[2],[0],[3],[0],[],[],[],[],[],[],[]]
         obj.push(2);
         obj.push(0);
         obj.push(3);
@@ -40,6 +44,64 @@ public class Min_Stack {
         System.out.println(obj.getMin());
         obj.pop();
         System.out.println(obj.getMin());
+    }
+}
+
+class MinStack1 {
+    private class ListNode {
+        public int val;
+        public int min_On_Node;
+        public ListNode next;
+        public ListNode pre;
+        public int count;
+
+        public ListNode(int x) {
+            val = x;
+        }
+        public ListNode() {
+
+        }
+    }
+    private ListNode header;
+    private ListNode cur;
+    private int count;
+    private int min;
+
+    public MinStack1() {
+        count = 0;
+        header = new ListNode();
+        cur = header;
+    }
+
+    public void push(int val) {
+        if (cur == header) {
+            min = val;
+        } else {
+            min = Math.min(min, val);
+        }
+        ListNode tmp = new ListNode(val);
+        tmp.min_On_Node = min;
+        cur.next = tmp;
+        tmp.pre = cur;
+        count++;
+        cur = cur.next;
+    }
+
+    public void pop() {
+        ListNode pre = cur.pre;
+        pre.next = null;
+        cur.pre = null;
+        min = pre.min_On_Node;
+        cur = pre;
+        count--;
+    }
+
+    public int top() {
+        return cur.val;
+    }
+
+    public int getMin() {
+        return min;
     }
 }
 

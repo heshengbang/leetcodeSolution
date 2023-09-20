@@ -32,6 +32,31 @@ Explanation: The square root of 8 is 2.82842..., and since
  */
 
 public class Sqrt_x {
+
+    public static int mySqrt1(int x) {
+        if (x == 0 || x == 1) {
+            return x;
+        }
+        int i = 2;
+        while (i * i < x && i * i  > 0) {
+            i++;
+        }
+        if (i * i == x) {
+            return i;
+        } else {
+            return i - 1;
+        }
+    }
+
+    public static void main(String[] args) {
+        System.out.println(mySqrt1(0));
+    }
+
+
+
+
+
+
     public static int mySqrt(int x) {
         if (x == 0) return 0;
         int i = 1, j = x;
@@ -44,9 +69,5 @@ public class Sqrt_x {
             }
         }
         return i * i == x ? i : i - 1;
-    }
-
-    public static void main(String[] args) {
-        System.out.println(mySqrt(2147483647));
     }
 }

@@ -8,6 +8,8 @@ package com.hsb.leetcode.medium;
  * email: trulyheshengbang@gmail.com
  */
 
+import java.util.List;
+
 /**
  * You are given two non-empty linked lists representing two non-negative integers. The digits are stored in reverse order and each of their nodes contain a single digit. Add the two numbers and return it as a linked list.
  * <p>
@@ -20,6 +22,66 @@ package com.hsb.leetcode.medium;
  * Explanation: 342 + 465 = 807.
  */
 public class Add_Two_Numbers {
+    public ListNode addTwoNumbers1(ListNode l1, ListNode l2) {
+        ListNode ans = null;
+        ListNode current = null;
+        boolean jw = false;
+        while (l1 != null && l2 != null) {
+            int sum = l1.val + l2.val;
+            if (jw) {
+                jw = false;
+                sum++;
+            }
+            if (sum >= 10) {
+                jw = true;
+                sum = sum - 10;
+            }
+            if (ans == null) {
+                ans = new ListNode(sum);
+                current = ans;
+            } else {
+                current.next = new ListNode(sum);
+                current = current.next;
+            }
+            l1 = l1.next;
+            l2 = l2.next;
+        }
+        while (l1 != null) {
+            int sum = l1.val;
+            if (jw) {
+                jw = false;
+                sum++;
+            }
+            if (sum >= 10) {
+                jw = true;
+                sum = sum - 10;
+            }
+            current.next = new ListNode(sum);
+            current = current.next;
+            l1 = l1.next;
+        }
+        while (l2 != null) {
+            int sum = l2.val;
+            if (jw) {
+                jw = false;
+                sum++;
+            }
+            if (sum >= 10) {
+                jw = true;
+                sum = sum - 10;
+            }
+            current.next = new ListNode(sum);
+            current = current.next;
+            l2 = l2.next;
+        }
+        if (jw) {
+            current.next = new ListNode(1);
+        }
+        return ans;
+    }
+
+
+
     public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
         ListNode root = null, current = null;
         boolean jinwei = false;
