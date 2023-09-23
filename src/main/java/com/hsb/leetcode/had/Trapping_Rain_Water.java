@@ -77,11 +77,35 @@ public class Trapping_Rain_Water {
         return total;
     }
 
-    public static void main(String[] args) {
-//        int[] height = {0,1,0,2,1,0,1,3,2,1,2,1};
+    public int trap2(int[] height) {
 
-        int[] height = {4,2,0,3,2,5};
+        int res = 0, leftMax = 0, rightMax = 0, left = 0, right = height.length - 1;
+
+        while (left <= right) {
+            if (leftMax <= rightMax) {
+                if (leftMax < height[left]) {
+                    leftMax = height[left];
+                } else {
+                    res += (leftMax - height[left]);
+                }
+                left++;
+            } else {
+                if (rightMax < height[right]) {
+                    rightMax = height[right];
+                } else {
+                    res += (rightMax - height[right]);
+                }
+                right--;
+            }
+        }
+        return res;
+    }
+
+    public static void main(String[] args) {
+        int[] height = {0,1,0,2,1,0,1,3,2,1,2,1};
+
+//        int[] height = {4,2,0,3,2,5};
         Trapping_Rain_Water item = new Trapping_Rain_Water();
-        System.out.println(item.trap1(height));
+        System.out.println(item.trap2(height));
     }
 }

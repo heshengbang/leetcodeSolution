@@ -9,6 +9,8 @@ package com.hsb.leetcode.easy;
  * @author heshengbang
  */
 
+import com.hsb.leetcode.entity.TreeNode;
+
 /**
  * Convert Sorted Array to Binary Search Tree
  *
@@ -31,30 +33,19 @@ package com.hsb.leetcode.easy;
  *
  */
 public class Convert_Sorted_Array_to_Binary_Search_Tree {
-    private static class TreeNode {
-        int val;
-        TreeNode left;
-        TreeNode right;
-        TreeNode(int x) {
-            val = x;
-        }
+
+    public TreeNode sortedArrayToBST1(int[] nums) {
+        return toBST(nums, 0, nums.length - 1);
     }
 
-    public TreeNode sortedArrayToBST(int[] nums) {
-        return insertNode(nums, 0, nums.length - 1);
-    }
-
-    private TreeNode insertNode(int[] nums, int begin, int end) {
-        if (end < begin || begin < 0 || begin >= nums.length || end >= nums.length) {
+    private TreeNode toBST(int[] nums, int start, int end) {
+        if (start > end || start < 0 || end >= nums.length) {
             return null;
         }
-        if (begin == end) {
-            return new TreeNode(begin);
-        }
-        int middle = (begin + end) / 2;
+        int middle = (start + end) / 2;
         TreeNode root = new TreeNode(nums[middle]);
-        root.left = insertNode(nums, begin, middle - 1);
-        root.right = insertNode(nums, middle + 1, end);
+        root.left = toBST(nums, start, middle - 1);
+        root.right = toBST(nums, middle + 1, end);
         return root;
     }
 }

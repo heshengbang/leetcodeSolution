@@ -18,9 +18,91 @@ public class Reverse_Nodes_in_k_Group {
         int[] param = {1, 2, 3, 4, 5};
         ListNode head = ToolUtils.constructListNode(param);
         Reverse_Nodes_in_k_Group item = new Reverse_Nodes_in_k_Group();
-        head = item.reverseKGroup1(head, 3);
+        head = item.reverseKGroup2(head, 3);
         ToolUtils.printListNode(head);
     }
+
+    public ListNode reverseKGroup3(ListNode head, int k) {
+        ListNode curr = head;
+        int count = 0;
+        while(curr != null & count < k) {
+            curr = curr.next;
+            count++;
+        }
+
+        if(count == k) {
+            curr = reverseKGroup3(curr, k);
+            while(count-- > 0) {
+                ListNode next = head.next;
+                head.next = curr;
+                curr = head;
+                head = next;
+            }
+            head = curr;
+        }
+        return head;
+    }
+
+    public ListNode reverseKGroup2(ListNode head, int k) {
+        if (k == 1 || head.next == null) {
+            return head;
+        }
+        ListNode cur = head;
+        int index = 0;
+        ListNode subHead = head;
+        List<ListNode> list = new ArrayList<>();
+        while (cur != null) {
+            index++;
+            if (index == k) {
+                ListNode next = cur.next;
+                cur.next = null;
+                list.add(subHead);
+                cur = next;
+                subHead = cur;
+                index = 0;
+            } else {
+                cur = cur.next;
+            }
+        }
+        ListNode tail = null;
+        if (subHead != null) {
+            tail = subHead;
+        }
+        List<ListNode> reverseList = new ArrayList<>();
+        for (ListNode it: list) {
+            cur = it;
+            subHead = cur;
+            ListNode pre = null;
+            while (true) {
+                ListNode tmp = cur.next;
+                cur.next = pre;
+                pre = cur;
+                cur = tmp;
+                if (cur != null) {
+                    subHead = cur;
+                } else {
+                    break;
+                }
+            }
+            reverseList.add(subHead);
+        }
+        ListNode ans = null;
+        for (ListNode it: reverseList) {
+            if (ans == null) {
+                ans = it;
+            } else {
+                cur.next = it;
+            }
+            cur = it;
+            while (cur.next != null) {
+                cur = cur.next;
+            }
+        }
+        cur.next = tail;
+        return ans;
+    }
+
+
 
     public ListNode reverseKGroup1(ListNode head, int k) {
         ListNode dummy = new ListNode(-1), pre = dummy, cur = pre;
