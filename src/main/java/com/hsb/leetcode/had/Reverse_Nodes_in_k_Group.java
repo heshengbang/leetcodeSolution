@@ -22,6 +22,35 @@ public class Reverse_Nodes_in_k_Group {
         ToolUtils.printListNode(head);
     }
 
+    public ListNode reverseKGroup4(ListNode head, int k) {
+        ListNode cur = head;
+        int index = 0;
+        while (cur != null && index < k) {
+            cur = cur.next;
+            index++;
+        }
+        // 不足k的时候，不反转
+        if (index < k) {
+            return head;
+        }
+        // 当index == k的时候，header到cur的前一个节点是k个节点，应该反转，cur到后面的部分就是子问题，但是子问题返回的应该是子问题已经反转后的链表的头节点
+        ListNode pre = reverseKGroup(cur, k);
+        cur = head;
+        while (index > 0) {
+            ListNode next = cur.next;
+            // 指向左边的前一个节点
+            cur.next = pre;
+            // 前一个节点指针向右移
+            pre = cur;
+            // cur的指针向右移
+            cur = next;
+            // 减索引，只反转k个
+            index--;
+        }
+        return pre;
+    }
+
+
     public ListNode reverseKGroup3(ListNode head, int k) {
         ListNode curr = head;
         int count = 0;

@@ -1,10 +1,9 @@
 package com.hsb.leetcode.easy;
 
+
 /*
  * Copyright ©2011-2016 heshengbang
- */
-
-/**
+ *
  * Reverse bits of a given 32 bits unsigned integer.
  *
  *
@@ -28,6 +27,79 @@ package com.hsb.leetcode.easy;
  *
  */
 public class Reverse_Bits {
+
+    /**
+     *
+     * 将数字n的每一位，从左至右，无符号右移31位，舍弃它右边的其他位数的值，再将其向左移动到reverse应该在的位置，比如32位对应1位，31位对应2位
+     * 然后和0位基底的上一轮的值做或运算，得到结果
+     * 将n左移一位，继续运算其他位数
+     *
+     * 举例：
+     *
+     * 假设 x = 01110101010101010101010101010101
+     * 运算第一轮 x >>> 31，无符号右移，左边填充0，得tmp = 0
+     * tmp 向左移动 0位，tmp仍为 0
+     * tmp 和 ans 做或运算 0 | 0，ans 为 0
+     * x 左移动1位，右边填充 0，此时 x = 11101010101010101010101010101010
+     *
+     * 运算第二轮 x >>> 31，无符号右移，左边填充0，得tmp = 1
+     * tmp 向左移动 1位，tmp为 10
+     * tmp 和 ans做或运算 10 | 0，ans 为 10
+     * x 左移动1位，右边填充 0，此时 x = 11010101010101010101010101010100
+     *
+     * 运算第三轮 x >>> 31，无符号右移，左边填充0，得tmp = 1
+     * tmp 向左移动 2位，tmp为 100
+     * tmp 和 ans做或运算 100 | 10，ans 为 110
+     * x 左移动1位，右边填充 0，此时 x = 10101010101010101010101010101000
+     *
+     * 运算第四轮 x >>> 31，无符号右移，左边填充0，得tmp = 1
+     * tmp 向左移动 3位，tmp为 1000
+     * tmp 和 ans做或运算 1000 | 110，ans 为 1110
+     * x 左移动1位，右边填充 0，此时 x = 01010101010101010101010101010000
+     *
+     */
+    public static int reverseBits2(int n) {
+        int ans = 0;
+        for (int i = 0; i < 32; i++) {
+            // 无符号左移31位，此时tmp就是0/1的情况
+            int tmp = n >>> 31;
+            // 右移i位，此时tmp除了i位左右皆为0
+            tmp = tmp << i;
+            // 和0为基地的数字做或运算，对应位置的值就会变更
+            ans = ans | tmp;
+            // 计算过的位置顶替掉，进入下一轮循环
+            n = n << 1;
+        }
+        return ans;
+    }
+
+
+    public static int reverseBits1(int n) {
+        StringBuffer sb = new StringBuffer(Integer.toBinaryString(n));
+        if (sb.length() < 32) {
+            for (int i = sb.length(); i < 32; i++) {
+                sb.insert(0, '0');
+            }
+        }
+        int times = 1;
+        int ans = 0;
+        for (int i = 0; i < 32; i++) {
+            if (sb.charAt(i) == '0') {
+                times = 2 * times;
+                continue;
+            }
+            ans += times;
+            times = 2 * times;
+        }
+        return ans;
+    }
+
+    public static void main(String[] args) {
+        System.out.println(reverseBits2(964176192));
+    }
+
+
+
     // you need treat n as an unsigned value
     public static int reverseBits(int n) {
         int out = 0;
@@ -46,9 +118,5 @@ public class Reverse_Bits {
         }
 
         return out;
-    }
-
-    public static void main(String[] args) {
-        System.out.println(reverseBits(43261596));
     }
 }

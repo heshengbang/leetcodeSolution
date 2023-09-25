@@ -30,6 +30,19 @@ package com.hsb.leetcode.easy;
  *
  */
 public class Single_Number {
+
+
+    public int singleNumber1(int[] nums) {
+        int result = 0;
+        for (int num: nums) {
+            result ^= num;
+        }
+        return result;
+    }
+
+
+
+
     public static int singleNumber(int[] nums) {
         int value = 0;
         for (int num: nums) {
