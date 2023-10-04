@@ -41,6 +41,29 @@ package com.hsb.leetcode.easy;
  */
 
 public class Number_of_1_Bits {
+
+    public int hammingWeight1(int n) {
+        int count = 0;
+        for (int i = 31; i >= 0; i--) {
+            // 无符号右移
+            int tmp = n >>> 31;
+            if (tmp == 1) {
+                count++;
+            }
+            n = n << 1;
+            System.out.println(Integer.toBinaryString(n));
+        }
+        return count;
+    }
+
+    public static void main(String[] args) {
+        int n = -3;
+        Number_of_1_Bits it = new Number_of_1_Bits();
+        System.out.println(it.hammingWeight1(n));
+    }
+
+
+
     // you need to treat n as an unsigned value
     public int hammingWeight(int n) {
         int result = 0;
