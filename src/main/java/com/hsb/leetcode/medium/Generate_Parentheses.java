@@ -8,10 +8,47 @@ package com.hsb.leetcode.medium;
  *************************************************
  */
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class Generate_Parentheses {
+
+    public List<String> generateParenthesis2(int n) {
+        return new AbstractList<String>() {
+            private List<String> ans;
+            @Override
+            public String get(int index) {
+                if (ans == null) {
+                    init();
+                }
+                return ans.get(index);
+            }
+            @Override
+            public int size() {
+                if (ans == null) {
+                    init();
+                }
+                return ans.size();
+            }
+            private void init() {
+                ans = new ArrayList<>();
+                generate(0, 0, "");
+            }
+            private void generate(int openBrackets, int closeBrackets, String pre) {
+                if (closeBrackets == n) {
+                    ans.add(pre);
+                    return;
+                }
+                if (openBrackets < n) {
+                    generate(openBrackets + 1, closeBrackets, pre + "(");
+                }
+                if (closeBrackets < openBrackets) {
+                    generate(openBrackets, closeBrackets + 1, pre + ")");
+                }
+            }
+        };
+    }
+
+
     public List<String> generateParenthesis(int n) {
         return construct("(", n - 1, n, 1);
     }
@@ -64,16 +101,23 @@ public class Generate_Parentheses {
         Generate_Parentheses item = new Generate_Parentheses();
         long start = System.currentTimeMillis();
         List<String> results = item.generateParenthesis1(14);
-        System.out.println("耗时：" + (System.currentTimeMillis() - start) + " 毫秒");
-        for (String s: results) {
+//        System.out.println("耗时：" + (System.currentTimeMillis() - start) + " 毫秒");
+//        for (String s: results) {
 //            System.out.println(s);
-        }
+//        }
+
+//        start = System.currentTimeMillis();
+//        results = item.generateParenthesis(14);
+//        System.out.println("耗时：" + (System.currentTimeMillis() - start) + " 毫秒");
+//        for (String s: results) {
+//            System.out.println(s);
+//        }
 
         start = System.currentTimeMillis();
-        results = item.generateParenthesis(14);
+        results = item.generateParenthesis2(4);
         System.out.println("耗时：" + (System.currentTimeMillis() - start) + " 毫秒");
         for (String s: results) {
-//            System.out.println(s);
+            System.out.println(s);
         }
     }
 }

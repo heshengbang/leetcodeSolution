@@ -1,47 +1,40 @@
 package com.hsb.leetcode.medium;
 
 public class Maximum_Sum_Circular_Subarray {
+
     public int maxSubarraySumCircular(int[] nums) {
-        int length = nums.length;
-        int[] dp = new int[length];
-        int[] startIndex = new int[length];
-        for (int i = 0; i < length; i++) {
-            dp[i] = nums[i];
-            startIndex[i] = i;
-        }
-        for (int i = 1; i < length; i++) {
-            if (dp[i - 1] >= 0) {
-                dp[i] = dp[i - 1] + nums[i];
-                startIndex[i] = startIndex[i - 1];
-            }
-        }
-        for (int i = 0; i < length; i++) {
-            if (i == 0) {
-                if (startIndex[length - 1] > 0) {
-                    if (dp[length - 1] >= 0) {
-                        dp[i] = dp[length - 1] + nums[i];
-                        startIndex[i] = startIndex[length - 1];
-                    }
-                }
-                continue;
+        int max = Integer.MIN_VALUE, maxSum = 0, min = Integer.MAX_VALUE, minSum = 0, sum = 0;
+        for (int num : nums) {
+            maxSum += num;
+            max = Math.max(max, maxSum);
+            if (maxSum < 0) {
+                maxSum = 0;
             }
 
-            if (startIndex[i - 1] != i) {
-                if (dp[i - 1] >= 0) {
-                    dp[i] = dp[i - 1] + nums[i];
-                    startIndex[i] = startIndex[i - 1];
-                }
+            minSum += num;
+            min = Math.min(min, minSum);
+            if (minSum > 0) {
+                minSum = 0;
             }
+            sum += num;
         }
-         int result = Integer.MIN_VALUE;
-        for (int num: dp) {
-            result = Math.max(result, num);
+        if (max < 0) {
+            return max;
+        } else {
+            return Math.max(sum - min, max);
         }
-        return result;
     }
 
     public static void main(String[] args) {
-        int[] nums = {5,-3,5};
+//        int[] nums = {5, -3, 5};
+
+        int[] nums = {1,-2,3,-2};
+
+//        int[] nums = {-3,-2,-3};
+
+//        int[] nums = {-3, 5 , 2};
+
+//        int[] nums = {2, -2, 2, 7, 8, -1};
 
         Maximum_Sum_Circular_Subarray it = new Maximum_Sum_Circular_Subarray();
         System.out.println(it.maxSubarraySumCircular(nums));

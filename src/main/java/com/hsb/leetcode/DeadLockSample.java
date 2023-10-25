@@ -49,8 +49,6 @@ public class DeadLockSample extends Thread {
         ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);       // 稍等5秒，然后每10秒进行一次死锁扫描
         scheduler.scheduleAtFixedRate(dlCheck, 5L, 10L, TimeUnit.SECONDS);// 死锁样例代码…
 
-
-
         String lockA = "lockA";
         String lockB = "lockB";
         DeadLockSample t1 = new DeadLockSample("Thread1", lockA, lockB);

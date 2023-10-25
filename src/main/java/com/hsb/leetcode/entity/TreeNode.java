@@ -8,10 +8,13 @@ package com.hsb.leetcode.entity;
  *************************************************
  */
 
+import com.hsb.leetcode.medium.Populating_Next_Right_Pointers_in_Each_Node_II;
+
 public class TreeNode {
     public int val;
     public TreeNode left;
     public TreeNode right;
+    public TreeNode next;
 
     public TreeNode(int x) {
         val = x;
