@@ -35,6 +35,44 @@ public class Copy_List_with_Random_Pointer {
     }
 
 
+    public Node copyRandomList1(Node head) {
+        Node cur = head;
+        Node curCopy;
+        Node copyHeader;
+        while (cur != null) {
+            curCopy = new Node(cur.val);
+            Node next = cur.next;
+            cur.next = curCopy;
+            curCopy.next = next;
+            cur = next;
+        }
+        cur = head;
+        while (cur != null) {
+            curCopy = cur.next;
+            Node next = curCopy.next;
+            if (cur.random != null) {
+                curCopy.random = cur.random.next;
+            }
+            cur = next;
+        }
+        cur = head;
+        copyHeader = null;
+        curCopy = null;
+        while (cur != null) {
+            if (curCopy == null) {
+                copyHeader = cur.next;
+            } else {
+                curCopy.next = cur.next;
+            }
+            curCopy = cur.next;
+            Node next = curCopy.next;
+            cur.next = next;
+            cur = next;
+        }
+        return copyHeader;
+    }
+
+
     private class Node {
         int val;
         Node next;

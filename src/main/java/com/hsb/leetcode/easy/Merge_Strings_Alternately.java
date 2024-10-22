@@ -29,6 +29,22 @@ public class Merge_Strings_Alternately {
 
         String word1 = "ab", word2 = "pqrs";
         Merge_Strings_Alternately it = new Merge_Strings_Alternately();
-        System.out.println(it.mergeAlternately(word1, word2));
+        System.out.println(it.mergeAlternately1(word1, word2));
+    }
+
+
+    public String mergeAlternately1(String word1, String word2) {
+        char[] ch1 = word1.toCharArray(), ch2 = word2.toCharArray();
+        int a = 0, b = 0;
+        StringBuilder result = new StringBuilder();
+        while (a < ch1.length || b < ch2.length) {
+            if (a < ch1.length) {
+                result.append(ch1[a++]);
+            }
+            if (b < ch2.length) {
+                result.append(ch2[b++]);
+            }
+        }
+        return result.toString();
     }
 }

@@ -30,4 +30,20 @@ public class Binary_Tree_Preorder_Traversal {
         }
         return result;
     }
+
+
+    public List<Integer> preorderTraversal1(TreeNode root) {
+        List<Integer> result = new ArrayList<>();
+        rec(root, result);
+        return result;
+    }
+
+    private void rec(TreeNode root, List<Integer> result) {
+        if (root == null) {
+            return;
+        }
+        result.add(root.val);
+        rec(root.left, result);
+        rec(root.right, result);
+    }
 }

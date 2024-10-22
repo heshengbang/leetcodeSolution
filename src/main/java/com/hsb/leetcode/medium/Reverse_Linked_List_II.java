@@ -51,9 +51,48 @@ public class Reverse_Linked_List_II {
         return mem[1];
     }
 
+    private ListNode reverseII(ListNode head, int left, int right) {
+        ListNode leftPre = null, leftNode = null, rightNext = null;
+        int index = 1;
+        ListNode current = head;
+        while (current != null) {
+            if (index == left - 1) {
+                leftPre = current;
+            }
+            if (index == left) {
+                leftNode = current;
+            }
+            if (index == right) {
+                rightNext = current.next;
+                current.next = null;
+                break;
+            }
+            index++;
+            current = current.next;
+        }
+        current = reverse(leftNode, rightNext);
+        if (leftPre != null) {
+            leftPre.next = current;
+        } else {
+            return current;
+        }
+        return head;
+    }
+
+    private ListNode reverse(final ListNode header, final ListNode tailNext) {
+        ListNode pre = tailNext, current = header;
+        while (current != null) {
+            ListNode tmp = current.next;
+            current.next = pre;
+            pre = current;
+            current = tmp;
+        }
+        return pre;
+    }
+
     public static void main(String[] args) {
-        ListNode header = ToolUtils.constructListNode(new int[]{1,2,3,4,5});
+        ListNode header = ToolUtils.constructListNode(new int[]{3,1,4,1,5,6});
         Reverse_Linked_List_II it = new Reverse_Linked_List_II();
-        System.out.println(it.reverseBetween(header, 2, 4));
+        ToolUtils.printListNode(it.reverseII(header, 1, 4));
     }
 }

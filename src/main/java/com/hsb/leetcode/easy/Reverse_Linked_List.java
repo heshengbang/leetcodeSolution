@@ -12,6 +12,17 @@ public class Reverse_Linked_List {
 
     }
 
+    private ListNode reverse(final ListNode header) {
+        ListNode pre = null, current = header;
+        while (current != null) {
+            ListNode tmp = current.next;
+            current.next = pre;
+            pre = current;
+            current = tmp;
+        }
+        return pre;
+    }
+
 
     public ListNode reverseList(ListNode head) {
         ListNode dummy = new ListNode(-5001), pre = dummy, cur = pre;

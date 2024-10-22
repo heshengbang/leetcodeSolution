@@ -1,6 +1,8 @@
 package com.hsb.leetcode.easy;
 
 
+import com.hsb.leetcode.entity.TreeNode;
+
 /**
  * Blog: https://www.heshengbang.tech
  * Twitter: https://twitter.com/heshengbang
@@ -34,17 +36,6 @@ return its depth = 3.
  */
 
 public class Maximum_Depth_of_Binary_Tree {
-
-    private static class TreeNode {
-        int val;
-        TreeNode left;
-        TreeNode right;
-
-        TreeNode(int x) {
-            val = x;
-        }
-    }
-
 
     public int maxDepth1(TreeNode root) {
         if (root == null) {

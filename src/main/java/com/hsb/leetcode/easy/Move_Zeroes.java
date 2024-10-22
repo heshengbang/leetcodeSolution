@@ -32,9 +32,37 @@ public class Move_Zeroes {
         }
     }
 
+    public void moveZeroes2(int[] nums) {
+        int zeroIndex = 0, otherIndex = 0, length = nums.length;
+        while (zeroIndex < length && otherIndex < length) {
+            while (zeroIndex < length && nums[zeroIndex] != 0) {
+                zeroIndex++;
+            }
+            while (otherIndex < length && nums[otherIndex] == 0) {
+                otherIndex++;
+            }
+            // 0不能和它前面的非0数字交换
+            if (zeroIndex > otherIndex) {
+                otherIndex++;
+                continue;
+            }
+            if (zeroIndex < length && otherIndex < length) {
+                int tmp = nums[zeroIndex];
+                nums[zeroIndex] = nums[otherIndex];
+                nums[otherIndex] = tmp;
+            }
+            zeroIndex++;
+            otherIndex++;
+        }
+        return;
+    }
+
     public static void main(String[] args) {
         int[] param = {0,1,0,3,12};
-        moveZeroes1(param);
+//        int[] param = {1, 0};
+//        int[] param = {0};
+        Move_Zeroes it = new Move_Zeroes();
+        it.moveZeroes2(param);
         System.out.println(Arrays.toString(param));
     }
 }
